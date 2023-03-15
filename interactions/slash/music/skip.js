@@ -62,7 +62,7 @@ module.exports = {
 			}
 		}
 
-		if (force) return skip();
+		if (force && interaction.user.id == queue.starter.user.id) return skip();
 
 		const membersInVoice = interaction.member.voice.channel.members.size;
 
