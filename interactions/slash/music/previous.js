@@ -61,7 +61,7 @@ module.exports = {
 			}
 		}
 
-		if (force) return previous();
+		if (force && interaction.user.id == queue.starter.user.id) return previous();
 
 		const membersInVoice = interaction.member.voice.channel.members.size;
 
