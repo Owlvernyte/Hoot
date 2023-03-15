@@ -77,7 +77,7 @@ module.exports = {
 					new SuccessEmbed(
 						`${
 							queue.backVotes.size
-						}/${required} back votes\nVotes: ${queue.skipVotes
+						}/${required} back votes\nVotes: ${queue.backVotes
 							.map((v) => `${v}`)
 							.join(", ")}`
 					),
