@@ -19,9 +19,9 @@
 	],
 	"license": "ISC",
 	"bugs": {
-		"url": "https://github.com/NamVr/DiscordBot-Template/issues"
+		"url": "https://github.com/fiezt1492/Hoot/issues"
 	},
-	"homepage": "https://github.com/NamVr/DiscordBot-Template#readme",
+	"homepage": "https://github.com/fiezt1492/Hoot#readme",
 	"dependencies": {
 		"@discordjs/opus": "^0.8.0",
 		"@discordjs/rest": "^1.5.0",
