@@ -2,6 +2,7 @@ const {
 	InteractionType,
 	ApplicationCommandType,
 } = require("discord-api-types/v10");
+const ErrorEmbed = require("../../constants/embeds/ErrorEmbed");
 
 module.exports = {
 	name: "interactionCreate",
@@ -25,20 +26,10 @@ module.exports = {
 
 		if (command.inVoiceChannel && !interaction.member.voice.channel) {
 			return interaction.reply({
-				content: `${client.emotes.error} | You must be in a voice channel!`,
+				embeds: [new ErrorEmbed(`You must be in a voice channel!`)],
 				ephemeral: true,
 			});
 		}
-
-		// if (
-		// 	command.sameVoiceChannel &&
-		// 	interaction.member.voice.channelId !==
-		// 		interaction.guild.me.voice.channelId
-		// )
-		// 	return interaction.reply({
-		// 		content: `${client.emotes.error} | You must be in a same voice channel as me!`,
-		// 		ephemeral: true,
-		// 	});
 
 		try {
 			await command.execute(interaction);
@@ -47,7 +38,11 @@ module.exports = {
 			if (interaction.isRepliable() && !interaction.replied)
 				await interaction
 					.reply({
-						content: "There was an issue while executing that command!",
+						embeds: [
+							new ErrorEmbed(
+								"There was an issue while executing that command!"
+							),
+						],
 						ephemeral: true,
 					})
 					.catch(console.error);

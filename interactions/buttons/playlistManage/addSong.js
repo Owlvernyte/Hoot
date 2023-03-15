@@ -82,13 +82,17 @@ module.exports = {
 
 						return `${
 							affectedRows > 0
-								? `${client.emotes.success} | Added \`${resolved.songs.length}\` songs to your **${exist.dataValues.playlistId}** playlist!`
-								: `${client.emotes.error} | Failed to add \`${resolved.songs.length}\` to your **${exist.dataValues.playlistId}** playlist`
+								? new SuccessEmbed(
+										`Added \`${resolved.songs.length}\` songs to your **${exist.dataValues.playlistId}** playlist!`
+								  )
+								: new ErrorEmbed(
+										`Failed to add \`${resolved.songs.length}\` to your **${exist.dataValues.playlistId}** playlist`
+								  )
 						}`;
 					}
 
 					await i.editReply({
-						embeds: [new SuccessEmbed(`${await addSong()}`)],
+						embeds: [await addSong()],
 					});
 				} catch (error) {
 					await i.editReply({

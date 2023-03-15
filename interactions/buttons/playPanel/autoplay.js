@@ -2,7 +2,11 @@ const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
 
 module.exports = {
 	id: "autoplay",
-
+    /**
+     * 
+     * @param {*} interaction 
+     * @returns 
+     */
 	async execute(interaction) {
 		const { client, guild } = interaction;
 		const queue = client.distube.getQueue(guild);

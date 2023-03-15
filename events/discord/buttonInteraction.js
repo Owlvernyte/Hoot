@@ -1,4 +1,5 @@
 const { InteractionType, ComponentType } = require("discord-api-types/v10");
+const ErrorEmbed = require("../../constants/embeds/ErrorEmbed");
 
 module.exports = {
 	name: "interactionCreate",
@@ -24,7 +25,7 @@ module.exports = {
 
 		if (command.inVoiceChannel && !interaction.member.voice.channel) {
 			return interaction.reply({
-				content: `${client.emotes.error} | You must be in a voice channel!`,
+				embeds: [new ErrorEmbed(`You must be in a voice channel!`)],
 				ephemeral: true,
 			});
 		}
@@ -37,7 +38,9 @@ module.exports = {
 		} catch (err) {
 			console.error(err);
 			await interaction.reply({
-				content: "There was an issue while executing that button!",
+				embeds: [
+					new ErrorEmbed(`There was an issue while executing that button!`),
+				],
 				ephemeral: true,
 			});
 			return;

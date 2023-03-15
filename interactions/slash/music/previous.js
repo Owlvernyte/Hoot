@@ -37,7 +37,7 @@ module.exports = {
 
 				interaction.reply({
 					embeds: [
-						new SuccessEmbed(`${client.emotes.success} | Backed!`).addFields({
+						new SuccessEmbed(`Backed!`).addFields({
 							name: `Now Playing`,
 							value: `[\`${song.name}\`](${song.url})`,
 						}),

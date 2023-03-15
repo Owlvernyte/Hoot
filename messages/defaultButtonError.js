@@ -4,6 +4,8 @@
  * @since 3.0.0
  */
 
+const ErrorEmbed = require("../constants/embeds/ErrorEmbed");
+
 module.exports = {
 	/**
 	 * @description Executes when the button interaction could not be fetched.
@@ -13,7 +15,9 @@ module.exports = {
 
 	async execute(interaction) {
 		await interaction.reply({
-			content: "There was an issue while fetching this button!",
+			embeds: [
+				new ErrorEmbed("There was an issue while fetching this button!"),
+			],
 			ephemeral: true,
 		});
 		return;

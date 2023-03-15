@@ -1,4 +1,5 @@
 const { InteractionType } = require("discord-api-types/v10");
+const ErrorEmbed = require("../../constants/embeds/ErrorEmbed");
 
 module.exports = {
 	name: "interactionCreate",
@@ -28,7 +29,9 @@ module.exports = {
 		} catch (err) {
 			console.error(err);
 			await interaction.reply({
-				content: "There was an issue while understanding this modal!",
+				embeds: [
+					new ErrorEmbed("There was an issue while understanding this modal!"),
+				],
 				ephemeral: true,
 			});
 			return;

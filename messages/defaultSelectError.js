@@ -4,6 +4,8 @@
  * @since 3.0.0
  */
 
+const ErrorEmbed = require("../constants/embeds/ErrorEmbed");
+
 module.exports = {
 	/**
 	 * @description Executes when the select menu interaction could not be fetched.
@@ -13,7 +15,11 @@ module.exports = {
 
 	async execute(interaction) {
 		await interaction.reply({
-			content: "There was an issue while fetching this select menu option!",
+			embeds: [
+				new ErrorEmbed(
+					"There was an issue while fetching this select menu option!"
+				),
+			],
 			ephemeral: true,
 		});
 		return;

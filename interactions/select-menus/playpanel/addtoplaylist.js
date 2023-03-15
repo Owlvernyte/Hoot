@@ -68,15 +68,13 @@ module.exports = {
 				.then(async (i) => {
 					if (i.customId === "voteNo") {
 						i.update({
-							content: `${client.emotes.error} | Cancelled!`,
-							embeds: [],
+							embeds: [new ErrorEmbed(`Cancelled!`)],
 							components: [],
 							ephemeral: true,
 						});
 					} else if (i.customId === "voteYes") {
 						i.update({
-							content: `${await addSong()}`,
-							embeds: [],
+							embeds: [await addSong()],
 							components: [],
 							ephemeral: true,
 						});

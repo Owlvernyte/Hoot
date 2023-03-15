@@ -1,4 +1,5 @@
 const { InteractionType, ComponentType } = require("discord-api-types/v10");
+const ErrorEmbed = require("../../constants/embeds/ErrorEmbed");
 
 module.exports = {
 	name: "interactionCreate",
@@ -30,7 +31,11 @@ module.exports = {
 		} catch (err) {
 			console.error(err);
 			await interaction.reply({
-				content: "There was an issue while executing that select menu option!",
+				embeds: [
+					new ErrorEmbed(
+						"There was an issue while executing that select menu option!"
+					),
+				],
 				ephemeral: true,
 			});
 			return;
