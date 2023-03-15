@@ -142,9 +142,8 @@ for (const module of slashCommands) {
 	for (const commandFile of commandFiles) {
 		const command = require(`./interactions/slash/${module}/${commandFile}`);
 		if (client.config.dev !== "on" && command.dev) continue;
-		if (command.skip) continue;
-		if (command.maintain || command.guildOwner)
-			command.data.setDefaultMemberPermissions(0);
+		if (command.skip || command.maintain) continue;
+		if (command.guildOwner) command.data.setDefaultMemberPermissions(0);
 		if (command.dm && command.dm == true) command.data.setDMPermission(true);
 		else if (!command.dm || (command.dm && command.dm == false))
 			command.data.setDMPermission(false);
@@ -339,4 +338,4 @@ client.on("debug", console.log).on("warn", console.log);
 
 client.login(client.config.token);
 
-module.exports = { client }
+module.exports = { client };
