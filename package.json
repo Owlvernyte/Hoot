@@ -1,0 +1,54 @@
+{
+	"name": "hoot",
+	"version": "0.1.5",
+	"description": "a music discord bot",
+	"funding": "https://ko-fi.com/fiezt",
+	"types": "./typings.d.ts",
+	"main": "bot.js",
+	"scripts": {
+		"start": "node index.js",
+		"dev": "nodemon index.js"
+	},
+	"repository": "git+https://github.com/fiezt1492/Hoot.git",
+	"author": "Fiezt <fiezt@pm.me> (https://github.com/fiezt1492)",
+	"contributors": [
+		{
+			"name": "NamVr",
+			"url": "https://github.com/NamVr"
+		}
+	],
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/NamVr/DiscordBot-Template/issues"
+	},
+	"homepage": "https://github.com/NamVr/DiscordBot-Template#readme",
+	"dependencies": {
+		"@discordjs/opus": "^0.8.0",
+		"@discordjs/rest": "^1.5.0",
+		"@discordjs/voice": "^0.15.0",
+		"@distube/soundcloud": "^1.3.0",
+		"@distube/spotify": "^1.5.1",
+		"@distube/yt-dlp": "^1.1.3",
+		"@distube/ytdl-core": "^4.11.7",
+		"cors": "^2.8.5",
+		"discord-api-types": "^0.36.3",
+		"discord.js": "^14.7.1",
+		"distube": "^4.0.4",
+		"express": "^4.18.2",
+		"libsodium-wrappers": "^0.7.11",
+		"lodash": "^4.17.21",
+		"lyrics-finder": "^21.7.0",
+		"millify": "^4.0.0",
+		"ms": "^2.1.3",
+		"node-cron": "^3.0.1",
+		"numeral": "^2.0.6",
+		"os": "^0.1.2",
+		"sequelize": "^6.21.3",
+		"sqlite3": "^5.0.9",
+		"topgg-autoposter": "^2.0.1",
+		"url": "^0.11.0"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.19"
+	}
+}
