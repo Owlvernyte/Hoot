@@ -1,6 +1,10 @@
 const cron = require("node-cron");
 const { ActivityType } = require("discord-api-types/v10");
 
+/**
+ * 
+ * @param {import("discord.js").Client} client 
+ */
 module.exports = (client) => {
 	console.log(
 		"[CRON] StatusChanger installed at 0 minutes past the hour, every 2 hours UTC"

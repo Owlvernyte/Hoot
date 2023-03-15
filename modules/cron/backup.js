@@ -6,6 +6,10 @@ const {
 	database,
 } = require("../../config.json");
 
+/**
+ *
+ * @param {import("discord.js").Client} client
+ */
 module.exports = (client) => {
 	console.log("[CRON] Backup installed at 12:00 AM, only on Sunday UTC");
 

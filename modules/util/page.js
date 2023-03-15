@@ -3,8 +3,21 @@ const {
 	ButtonBuilder,
 	EmbedBuilder,
 	ButtonStyle,
+	codeBlock,
 } = require("discord.js");
+const ErrorEmbed = require("../../constants/embeds/ErrorEmbed");
 
+/**
+ *
+ * @param {import("discord.js").Interaction} interaction
+ * @param {import ("discord.js").Embed[]} embeds
+ * @param {number} duration
+ * @param {boolean} resetTimer
+ * @param {any} filter
+ * @param {boolean} pageNumber
+ * @param {import("discord.js").Component[]} components
+ * @param {boolean} ephemeral
+ */
 module.exports = async (
 	interaction,
 	embeds,
@@ -16,6 +29,11 @@ module.exports = async (
 	ephemeral = false
 ) => {
 	try {
+        /**
+         *
+         * @param {boolean} state
+         * @returns
+         */
 		const row = (state) => {
 			const pageButtons = new ActionRowBuilder().addComponents(
 				new ButtonBuilder()
@@ -120,7 +138,7 @@ module.exports = async (
 	} catch (error) {
 		interaction
 			.reply({
-				content: `**ERROR**: ${error.message}`,
+				embeds: [new ErrorEmbed(codeBlock(`${error.message}`))],
 				ephemeral: true,
 			})
 			.catch(console.error);

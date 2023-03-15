@@ -1,5 +1,12 @@
 const { EmbedBuilder } = require("discord.js");
 
+
+/**
+ *
+ * @param {import("distube").Song[]} songs
+ * @param {string} name
+ * @returns
+ */
 module.exports = (songs, name) => [
 	new EmbedBuilder()
 		.setColor("Random")

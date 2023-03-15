@@ -1,5 +1,10 @@
 const { URL } = require("url");
 
+/**
+ * 
+ * @param {string} input 
+ * @returns 
+ */
 module.exports = (input) => {
 	if (typeof input !== "string" || input.includes(" ")) return false;
 	try {

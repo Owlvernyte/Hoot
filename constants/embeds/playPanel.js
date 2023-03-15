@@ -1,5 +1,11 @@
 const { EmbedBuilder } = require("discord.js");
-
+/**
+ *
+ * @param {import ("distube").Song} song
+ * @param {import ("distube").Queue} queue
+ * @param {import('discord.js').Client} client
+ * @returns
+ */
 module.exports = (song, queue, client) => [
 	new EmbedBuilder()
 		.setColor(queue.paused ? "Red" : "Random")

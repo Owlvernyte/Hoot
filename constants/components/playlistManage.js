@@ -1,5 +1,12 @@
 const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
 
+/**
+ *
+ * @param {boolean} state
+ * @param {import("distube").Song[]} songs
+ * @param {string} name
+ * @returns
+ */
 module.exports = (state, songs, name) =>
 	new ActionRowBuilder().addComponents(
 		new ButtonBuilder()

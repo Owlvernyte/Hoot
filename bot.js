@@ -299,6 +299,11 @@ const commandJsonData = [
 	}
 })();
 
+/**
+ *
+ * @param {import("distube").Queue} queue
+ * @returns
+ */
 const status = (queue) =>
 	`Volume: ${queue.volume}% | Filter: ${
 		queue.filters.names.join(", ") || "Off"
