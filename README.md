@@ -19,7 +19,7 @@
 
 <div style="text-align: center;">
 
-![Contributors](https://img.shields.io/github/contributors/fiezt1492/Hoot?color=dark-green) ![Forks](https://img.shields.io/github/forks/fiezt1492/Hoot?style=social) ![Stargazers](https://img.shields.io/github/stars/fiezt1492/Hoot?style=social) ![Issues](https://img.shields.io/github/issues/fiezt1492/Hoot) ![License](https://img.shields.io/github/license/fiezt1492/Hoot)
+![Contributors](https://img.shields.io/github/contributors/fiezt1492/Hoot?color=dark-green) ![Forks](https://img.shields.io/github/forks/fiezt1492/Hoot?style=social) ![Stargazers](https://img.shields.io/github/stars/fiezt1492/Hoot?style=social) ![Issues](https://img.shields.io/github/issues/fiezt1492/Hoot) ![License](https://img.shields.io/github/license/fiezt1492/Hoot)[![Deploy](https://github.com/fiezt1492/Hoot/actions/workflows/deploy.yml/badge.svg?branch=master)](https://github.com/fiezt1492/Hoot/actions/workflows/deploy.yml)
 
 </div>
 
