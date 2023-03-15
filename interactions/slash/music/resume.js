@@ -1,7 +1,7 @@
 // Deconstructed the constants we need in this file.
 
-const { EmbedBuilder } = require("discord.js");
 const { SlashCommandBuilder } = require("@discordjs/builders");
+const SuccessEmbed = require("../../../constants/embeds/SuccessEmbed");
 
 module.exports = {
 	// The data needed to register slash commands to Discord.
@@ -18,16 +18,14 @@ module.exports = {
 
 		if (!queue)
 			return interaction.reply({
-				content: `${client.emotes.error} | There is nothing playing!`,
+				embeds: [new ErrorEmbed("There is nothing playing!")],
 				ephemeral: true,
 			});
 
 		queue.resume();
 
 		interaction.reply({
-			embeds: [
-				new EmbedBuilder().setColor("Blurple").setTitle("Resumed the song!"),
-			],
+			embeds: [new SuccessEmbed("Resumed the song!")],
 		});
 	},
 };

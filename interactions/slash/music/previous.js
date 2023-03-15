@@ -1,7 +1,8 @@
 // Deconstructed the constants we need in this file.
 
-const { EmbedBuilder } = require("discord.js");
 const { SlashCommandBuilder } = require("@discordjs/builders");
+const SuccessEmbed = require("../../../constants/embeds/SuccessEmbed");
+const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
 
 module.exports = {
 	// The data needed to register slash commands to Discord.
@@ -26,42 +27,32 @@ module.exports = {
 
 		if (!queue)
 			return interaction.reply({
-				content: `${client.emotes.error} | There is nothing playing!`,
+				embeds: [new ErrorEmbed("There is nothing playing!")],
 				ephemeral: true,
 			});
-
-		const Embed = new EmbedBuilder();
 
 		async function previous() {
 			try {
 				const song = await queue.previous();
 
-				Embed.setColor("Green")
-					.setDescription(`${client.emotes.success} | Backed!`)
-					.addFields([
-						{
+				interaction.reply({
+					embeds: [
+						new SuccessEmbed(`${client.emotes.success} | Backed!`).addFields({
 							name: `Now Playing`,
 							value: `[\`${song.name}\`](${song.url})`,
-						},
-					]);
-
-				interaction.reply({
-					embeds: [Embed],
+						}),
+					],
 				});
 			} catch (error) {
 				interaction.reply({
-					embeds: [
-						new EmbedBuilder()
-							.setColor("Red")
-							.setTitle(`${client.emotes.error} ERROR`)
-							.setDescription(`${error.message}`),
-					],
+					embeds: [new ErrorEmbed(`${error.message}`)],
 					ephemeral: true,
 				});
 			}
 		}
 
-		if (force && interaction.user.id == queue.starter.user.id) return previous();
+		if (force && interaction.user.id == queue.starter.user.id)
+			return previous();
 
 		const membersInVoice = interaction.member.voice.channel.members.size;
 
@@ -73,7 +64,7 @@ module.exports = {
 				previous();
 			} else
 				return interaction.reply({
-					content: `${client.emotes.error} | You have already voted!`,
+					embeds: [new ErrorEmbed(`You have already voted!`)],
 					ephemeral: true,
 				});
 		}
@@ -83,7 +74,7 @@ module.exports = {
 		if (queue.backVotes.size < required)
 			interaction.reply({
 				embeds: [
-					Embed.setColor("Blurple").setDescription(
+					new SuccessEmbed(
 						`${
 							queue.backVotes.size
 						}/${required} back votes\nVotes: ${queue.skipVotes

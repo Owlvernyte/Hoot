@@ -1,8 +1,8 @@
 // Deconstructed the constants we need in this file.
-// const DisTube = require("DisTube");
-// const _ = require("lodash");
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require("discord.js");
+
 const { SlashCommandBuilder } = require("@discordjs/builders");
+const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
+const SuccessEmbed = require("../../../constants/embeds/SuccessEmbed");
 
 module.exports = {
 	// The data needed to register slash commands to Discord.
@@ -64,7 +64,6 @@ module.exports = {
 	// skip: true,
 	async execute(interaction) {
 		const { client } = interaction;
-		const Embed = new EmbedBuilder().setColor("Random");
 		const subcommand = interaction.options.getSubcommand();
 		const name = interaction.options.getString("name");
 		await interaction.deferReply({ ephemeral: true });
@@ -86,11 +85,7 @@ module.exports = {
 			}
 		} catch (error) {
 			interaction.editReply({
-				embeds: [
-					Embed.setColor("Red")
-						.setTitle("ERROR")
-						.setDescription(`\`\`\`${error.message}\`\`\``),
-				],
+				embeds: [new ErrorEmbed(`\`\`\`${error.message}\`\`\``)],
 			});
 			console.error(error);
 		}
@@ -136,7 +131,11 @@ async function playlistCreate(interaction, name) {
 
 	if (count > 10)
 		return interaction.editReply({
-			content: `${client.emotes.error} | You have reached maximum playlists (\`10\`). Delete some before create a new one!`,
+			embeds: [
+				new ErrorEmbed(
+					`You have reached maximum playlists (\`10\`). Delete some before create a new one!`
+				),
+			],
 		});
 
 	const [playlist, created] = await client.db.models.Playlists.findOrCreate({
@@ -152,11 +151,13 @@ async function playlistCreate(interaction, name) {
 
 	if (!created)
 		return interaction.editReply({
-			content: `${client.emotes.error} | You already have that playlist`,
+			embeds: [new ErrorEmbed(`You already have that playlist!`)],
 		});
 
 	interaction.editReply({
-		content: `${client.emotes.success} | Created **${playlist.dataValues.playlistId}**!`,
+		embeds: [
+			new SuccessEmbed(`Created **${playlist.dataValues.playlistId}**!`),
+		],
 	});
 }
 
@@ -172,7 +173,7 @@ async function playlistManage(interaction, name) {
 
 	if (exist === null)
 		return interaction.editReply({
-			content: `${client.emotes.error} | That playlist doesn't exist!`,
+			embeds: [new ErrorEmbed(`That playlist doesn't exist!`)],
 		});
 
 	const managePanel = require("../../../constants/embeds/playlistManage");
@@ -200,7 +201,7 @@ async function playlistPlay(interaction, name) {
 
 	if (!interaction.member.voice.channel) {
 		return interaction.reply({
-			content: `${client.emotes.error} | You must be in a voice channel!`,
+			embeds: [new ErrorEmbed(`You must be in a voice channel!`)],
 			ephemeral: true,
 		});
 	}
@@ -214,12 +215,12 @@ async function playlistPlay(interaction, name) {
 
 	if (exist === null)
 		return interaction.editReply({
-			content: `${client.emotes.error} | That playlist doesn't exist!`,
+			embeds: [new ErrorEmbed(`That playlist doesn't exist!`)],
 		});
 
 	if (!exist.dataValues.data.songs.length)
 		return interaction.editReply({
-			content: `${client.emotes.error} | This playlist is empty! Add some songs!`,
+			embeds: [new ErrorEmbed(`This playlist is empty! Add some songs!`)],
 		});
 
 	const playlist = await client.distube.createCustomPlaylist(
@@ -257,7 +258,7 @@ async function playlistDelete(interaction, name) {
 
 	if (exist === null)
 		return interaction.editReply({
-			content: `${client.emotes.error} | That playlist doesn't exist!`,
+			embeds: [new ErrorEmbed(`That playlist doesn't exist!`)],
 		});
 
 	const deleted = await client.db.models.Playlists.destroy({
@@ -267,11 +268,13 @@ async function playlistDelete(interaction, name) {
 		},
 	});
 
-	interaction.editReply({
-		content: `${
-			deleted > 0
-				? `${client.emotes.success} | Deleted!`
-				: `${client.emotes.error} | Failed to delete`
-		}`,
-	});
+	if (deleted > 0) {
+		interaction.editReply({
+			embeds: [new SuccessEmbed(`Deleted!`)],
+		});
+	} else {
+		interaction.editReply({
+			embeds: [new ErrorEmbed(`Failed to delete`)],
+		});
+	}
 }

@@ -1,4 +1,12 @@
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
+const {
+	EmbedBuilder,
+	ActionRowBuilder,
+	ButtonBuilder,
+	ButtonStyle,
+} = require("discord.js");
+const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
+const SuccessEmbed = require("../../../constants/embeds/SuccessEmbed");
+const WarningEmbed = require("../../../constants/embeds/WarningEmbed");
 
 module.exports = {
 	id: "addtopl",
@@ -18,7 +26,7 @@ module.exports = {
 
 		if (exist === null)
 			return interaction.reply({
-				content: `${client.emotes.error} | This playlist doesn't exist!`,
+				embeds: [new ErrorEmbed(`This playlist doesn't exist!`)],
 				ephemeral: true,
 			});
 
@@ -39,15 +47,11 @@ module.exports = {
 			),
 		];
 
-		const Embed = new EmbedBuilder()
-			.setColor("Orange")
-			.setTitle(`${client.emotes.warning} CAUTION`)
-			.setDescription(
-				`That song is already been in your **Favorite** playlist! Are you sure that you want to add more?`
-			)
-			.setFooter({
-				text: `You have 30 secs to confirm!`,
-			});
+		const Embed = new WarningEmbed(
+			`That song is already been in your **Favorite** playlist! Are you sure that you want to add more?`
+		).setFooter({
+			text: `You have 30 secs to confirm!`,
+		});
 
 		if (duplicated) {
 			interaction.reply({
@@ -91,7 +95,7 @@ module.exports = {
 				});
 		} else {
 			await interaction.reply({
-				content: `${await addSong()}`,
+				embeds: [await addSong()],
 				ephemeral: true,
 			});
 		}
@@ -113,11 +117,13 @@ module.exports = {
 				}
 			);
 
-			return `${
-				affectedRows > 0
-					? `${client.emotes.success} | Added \`${song}\` to your **${exist.dataValues.playlistId}** playlist!`
-					: `${client.emotes.error} | Failed to add \`${song}\` to your **${exist.dataValues.playlistId}** playlist`
-			}`;
+			return affectedRows > 0
+				? new SuccessEmbed(
+						`Added \`${song}\` to your **${exist.dataValues.playlistId}** playlist!`
+				  )
+				: new ErrorEmbed(
+						`Failed to add \`${song}\` to your **${exist.dataValues.playlistId}** playlist`
+				  );
 		}
 
 		return;

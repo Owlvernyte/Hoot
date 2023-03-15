@@ -3,6 +3,8 @@ const {
 	ActionRowBuilder,
 	SelectMenuBuilder,
 } = require("discord.js");
+const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
+const InfoEmbed = require("../../../constants/embeds/InfoEmbed");
 
 module.exports = {
 	id: "addtopl",
@@ -23,7 +25,11 @@ module.exports = {
 
 		if (!userPlaylistsModels.length)
 			return interaction.reply({
-				content: `${client.emotes.error} | You have no playlist! Create one by using \`/playlist create\``,
+				embeds: [
+					new ErrorEmbed(
+						`You have no playlist! Create one by using \`/playlist create\``
+					),
+				],
 				ephemeral: true,
 			});
 
@@ -33,17 +39,15 @@ module.exports = {
 			value: `${model.dataValues.playlistId}`,
 		}));
 
-		const Embed = new EmbedBuilder()
-			.setColor("Random")
+		const Embed = new InfoEmbed(
+			`Which playlist you want to add [\`${song.name}\`](${song.url}) to?`
+		)
 			.setTitle(song.name)
-			.setURL(song.url)
-			.setDescription(
-				`Which playlist you want to add [\`${song.name}\`](${song.url}) to?`
-			);
+			.setURL(song.url);
 
 		const row = (state) =>
 			new ActionRowBuilder().addComponents(
-				new SelectMenuBuilder()
+				new StringSelectMenuBuilder()
 					.setCustomId("addtopl")
 					.setPlaceholder("Select a playlist...")
 					.setDisabled(state)

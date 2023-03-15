@@ -19,7 +19,7 @@ module.exports = {
 
 		if (!queue)
 			return interaction.reply({
-				content: `${client.emotes.error} | There is nothing playing!`,
+				embeds: [new ErrorEmbed("There is nothing playing!")],
 				ephemeral: true,
 			});
 
@@ -29,9 +29,7 @@ module.exports = {
 
 		if (song.isLive) descriptionArray.push(`🔴 \`Live\``);
 		else {
-			descriptionArray.push(
-				`⌛ \`${queue.formattedCurrentTime}\``
-			);
+			descriptionArray.push(`⌛ \`${queue.formattedCurrentTime}\``);
 		}
 
 		if (song.views) descriptionArray.push(`👁 \`${millify(song.views)}\``);

@@ -1,7 +1,8 @@
 // Deconstructed the constants we need in this file.
 
-const { EmbedBuilder } = require("discord.js");
 const { SlashCommandBuilder } = require("@discordjs/builders");
+const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
+const SuccessEmbed = require("../../../constants/embeds/SuccessEmbed");
 
 module.exports = {
 	// The data needed to register slash commands to Discord.
@@ -32,7 +33,7 @@ module.exports = {
 
 		if (!queue)
 			return interaction.reply({
-				content: `${client.emotes.error} | There is nothing playing!`,
+				embeds: [new ErrorEmbed("There is nothing playing!")],
 				ephemeral: true,
 			});
 
@@ -41,9 +42,7 @@ module.exports = {
 
 		if (old_position === new_position)
 			return interaction.reply({
-				embeds: [
-					new EmbedBuilder().setColor("Red").setDescription(`Nothing changed`),
-				],
+				embeds: [new ErrorEmbed(`Nothing changed`)],
 				ephemeral: true,
 			});
 
@@ -53,13 +52,11 @@ module.exports = {
 		)
 			return interaction.reply({
 				embeds: [
-					new EmbedBuilder()
-						.setColor("Red")
-						.setDescription(
-							`One of two positions you entered (Old: \`${old_position}\`, New: \`${new_position}\`) is bigger than the queue length (\`${
-								queue.songs.length - 1
-							}\`)`
-						),
+					new ErrorEmbed(
+						`One of two positions you entered (Old: \`${old_position}\`, New: \`${new_position}\`) is bigger than the queue length (\`${
+							queue.songs.length - 1
+						}\`)`
+					),
 				],
 				ephemeral: true,
 			});
@@ -81,11 +78,9 @@ module.exports = {
 
 		interaction.reply({
 			embeds: [
-				new EmbedBuilder()
-					.setColor("Random")
-					.setDescription(
-						`Moved [\`${song.name}\`](${song.url}) to \`${new_position}\``
-					),
+				new SuccessEmbed(
+					`Moved [\`${song.name}\`](${song.url}) to \`${new_position}\``
+				),
 			],
 		});
 	},

@@ -1,6 +1,5 @@
 // Deconstructed the constants we need in this file.
-// const DisTube = require("DisTube");
-const { EmbedBuilder, Constants } = require("discord.js");
+
 const { ChannelType } = require("discord-api-types/v10");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 

@@ -1,7 +1,9 @@
 // Deconstructed the constants we need in this file.`
+
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require("discord.js");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const _ = require("lodash");
+const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
 
 module.exports = {
 	// The data needed to register slash commands to Discord.
@@ -18,7 +20,7 @@ module.exports = {
 
 		if (!queue)
 			return interaction.reply({
-				content: `${client.emotes.error} | There is nothing playing!`,
+				embeds: [new ErrorEmbed("There is nothing playing!")],
 				ephemeral: true,
 			});
 
@@ -40,12 +42,10 @@ module.exports = {
 			new EmbedBuilder()
 				.setTitle(`${totalSongs} songs in queue`)
 				.setDescription(`${c.join("\n")}`)
-				.addFields([
-					{
-						name: `Now Playing`,
-						value: `**[${np.name}](${np.url}) - \`${np.formattedDuration}\`**`,
-					},
-				])
+				.addFields({
+					name: `Now Playing`,
+					value: `**[${np.name}](${np.url}) - \`${np.formattedDuration}\`**`,
+				})
 				.setColor("Random")
 		);
 

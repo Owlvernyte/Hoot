@@ -1,7 +1,9 @@
 // Deconstructed the constants we need in this file.
 
-const { EmbedBuilder } = require("discord.js");
 const { SlashCommandBuilder } = require("@discordjs/builders");
+const SuccessEmbed = require("../../../constants/embeds/SuccessEmbed");
+const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
+const InfoEmbed = require("../../../constants/embeds/InfoEmbed");
 // const sequelize = require("sequelize");
 
 module.exports = {
@@ -27,36 +29,25 @@ module.exports = {
 
 		if (!queue)
 			return interaction.reply({
-				content: `${client.emotes.error} | There is nothing playing!`,
+				embeds: [new ErrorEmbed("There is nothing playing!")],
 				ephemeral: true,
 			});
-
-		const Embed = new EmbedBuilder();
 
 		async function skip() {
 			try {
 				const song = await queue.skip();
 
-				Embed.setColor("Green")
-					.setDescription(`${client.emotes.success} | Skipped!`)
-					.addFields([
-						{
+				interaction.reply({
+					embeds: [
+						new SuccessEmbed(`${client.emotes.success} | Skipped!`).addFields({
 							name: `Now Playing`,
 							value: `[\`${song.name}\`](${song.url})`,
-						},
-					]);
-
-				interaction.reply({
-					embeds: [Embed],
+						}),
+					],
 				});
 			} catch (error) {
 				interaction.reply({
-					embeds: [
-						new EmbedBuilder()
-							.setColor("Red")
-							.setTitle(`${client.emotes.error} ERROR`)
-							.setDescription(`${error.message}`),
-					],
+					embeds: [new ErrorEmbed(`${error.message}`)],
 					ephemeral: true,
 				});
 			}
@@ -74,7 +65,7 @@ module.exports = {
 				skip();
 			} else
 				return interaction.reply({
-					content: `${client.emotes.error} | You have already voted!`,
+					embeds: [new ErrorEmbed(`You have already voted!`)],
 					ephemeral: true,
 				});
 		}
@@ -84,7 +75,7 @@ module.exports = {
 		if (queue.skipVotes.size < required)
 			interaction.reply({
 				embeds: [
-					Embed.setColor("Blurple").setDescription(
+					new InfoEmbed(
 						`${
 							queue.skipVotes.size
 						}/${required} skip votes\nVotes: ${queue.skipVotes

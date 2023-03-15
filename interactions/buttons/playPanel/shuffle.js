@@ -1,4 +1,6 @@
 const { EmbedBuilder } = require("discord.js");
+const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
+const SuccessEmbed = require("../../../constants/embeds/SuccessEmbed");
 
 module.exports = {
 	id: "shuffle",
@@ -10,7 +12,7 @@ module.exports = {
 
 		if (!queue)
 			return interaction.reply({
-				content: `${client.emotes.error} | There is nothing playing!`,
+				embeds: [new ErrorEmbed("There is nothing playing!")],
 				ephemeral: true,
 			});
 
@@ -21,7 +23,7 @@ module.exports = {
 			interaction.message.id !== queue.panelId
 		)
 			return interaction.reply({
-				content: `${client.emotes.error} | You don't own this panel!`,
+				embeds: [new ErrorEmbed(`You don't own this panel!`)],
 				ephemeral: true,
 			});
 
@@ -29,13 +31,10 @@ module.exports = {
 
 		interaction.reply({
 			embeds: [
-				new EmbedBuilder()
-					.setColor("Blurple")
-					.setAuthor({
-						name: `${interaction.user.tag}`,
-						iconURL: `${interaction.user.displayAvatarURL()}`,
-					})
-					.setTitle("Shuffled songs in queue!"),
+				new SuccessEmbed("Shuffled songs in queue!").setAuthor({
+					name: `${interaction.user.tag}`,
+					iconURL: `${interaction.user.displayAvatarURL()}`,
+				}),
 			],
 		});
 		return;

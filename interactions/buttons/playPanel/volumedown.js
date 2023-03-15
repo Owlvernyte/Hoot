@@ -1,3 +1,5 @@
+const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
+
 module.exports = {
 	id: "volumedown",
 
@@ -8,7 +10,7 @@ module.exports = {
 
 		if (!queue)
 			return interaction.reply({
-				content: `${client.emotes.error} | There is nothing playing!`,
+				embeds: [new ErrorEmbed("There is nothing playing!")],
 				ephemeral: true,
 			});
 
@@ -19,13 +21,13 @@ module.exports = {
 			interaction.message.id !== queue.panelId
 		)
 			return interaction.reply({
-				content: `${client.emotes.error} | You don't own this panel!`,
+				embeds: [new ErrorEmbed(`You don't own this panel!`)],
 				ephemeral: true,
 			});
 
 		if (queue.volume <= 0)
 			return interaction.reply({
-				content: `${client.emotes.error} | Cannot down volume anymore!`,
+				embeds: [new ErrorEmbed(`Cannot down volume anymore!`)],
 				ephemeral: true,
 			});
 

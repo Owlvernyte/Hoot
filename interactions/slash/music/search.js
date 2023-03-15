@@ -1,11 +1,6 @@
 // Deconstructed the constants we need in this file.
 // const DisTube = require("DisTube");
 const _ = require("lodash");
-const {
-	EmbedBuilder,
-	ActionRowBuilder,
-	SelectMenuBuilder,
-} = require("discord.js");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
@@ -25,7 +20,6 @@ module.exports = {
 	checkFocused: true,
 	category: "music",
 	async execute(interaction) {
-		const { client, message, guild } = interaction;
 		await interaction.deferReply()
 		const string = interaction.options.getString("query");
 
@@ -40,7 +34,7 @@ module.exports = {
 		});
 	},
 	async autocomplete(interaction) {
-		const { client, guild } = interaction;
+		const { client } = interaction;
 
 		const focusedValue = interaction.options.getFocused();
 

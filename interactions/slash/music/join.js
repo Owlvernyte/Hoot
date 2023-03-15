@@ -1,8 +1,10 @@
 // Deconstructed the constants we need in this file.
 
-const Discord = require("discord.js");
+const { Constants, EmbedBuilder, PermissionFlagsBits } = require("discord.js");
 const { ChannelType } = require("discord-api-types/v10");
 const { SlashCommandBuilder } = require("@discordjs/builders");
+const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
+const SuccessEmbed = require("../../../constants/embeds/SuccessEmbed");
 
 module.exports = {
 	// The data needed to register slash commands to Discord.
@@ -15,7 +17,8 @@ module.exports = {
 				.setName("destination")
 				.setDescription("Select a voice channel")
 				.addChannelTypes(ChannelType.GuildStageVoice, ChannelType.GuildVoice)
-		),
+		)
+		.setDefaultMemberPermissions(PermissionFlagsBits.Connect),
 	// inVoiceChannel: true,
 	category: "music",
 	async execute(interaction) {
@@ -26,21 +29,17 @@ module.exports = {
 			interaction.member.voice.channel ||
 			interaction.channel;
 
-		if (
-			!Discord.Constants.VoiceBasedChannelTypes.includes(voiceChannel?.type)
-		) {
+		if (!Constants.VoiceBasedChannelTypes.includes(voiceChannel?.type)) {
 			return interaction.reply({
-				content: `${client.emotes.error} | ${voiceChannel} is not a valid voice channel!`,
+				embeds: [
+					new ErrorEmbed(`${voiceChannel} is not a valid voice channel!`),
+				],
 				ephemeral: true,
 			});
 		}
 
 		interaction.reply({
-			embeds: [
-				new Discord.EmbedBuilder()
-					.setColor("Blurple")
-					.setDescription(`Joined ${voiceChannel}`),
-			],
+			embeds: [new SuccessEmbed(`Joined ${voiceChannel}`)],
 			// ephemeral: true,
 		});
 

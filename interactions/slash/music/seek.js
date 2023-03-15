@@ -1,7 +1,8 @@
 // Deconstructed the constants we need in this file.
 
-const { EmbedBuilder } = require("discord.js");
 const { SlashCommandBuilder } = require("@discordjs/builders");
+const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
+const SuccessEmbed = require("../../../constants/embeds/SuccessEmbed");
 
 module.exports = {
 	// The data needed to register slash commands to Discord.
@@ -25,7 +26,7 @@ module.exports = {
 
 		if (!queue)
 			return interaction.reply({
-				content: `${client.emotes.error} | There is nothing playing!`,
+				embeds: [new ErrorEmbed("There is nothing playing!")],
 				ephemeral: true,
 			});
 
@@ -34,11 +35,9 @@ module.exports = {
 		if (time > queue.songs[0].duration)
 			return interaction.reply({
 				embeds: [
-					new EmbedBuilder()
-						.setColor("Red")
-						.setDescription(
-							`The time you entered (second \`${time}\`) is bigger than the song duration (\`${queue.songs[0].duration}\`)`
-						),
+					new ErrorEmbed(
+						`The time you entered (second \`${time}\`) is bigger than the song duration (\`${queue.songs[0].duration}\`)`
+					),
 				],
 				ephemeral: true,
 			});
@@ -46,11 +45,7 @@ module.exports = {
 		queue.seek(time);
 
 		interaction.reply({
-			embeds: [
-				new EmbedBuilder()
-					.setColor("Random")
-					.setDescription(`Seeked to second \`${time}\``),
-			],
+			embeds: [new SuccessEmbed(`Seeked to second \`${time}\``)],
 		});
 	},
 };

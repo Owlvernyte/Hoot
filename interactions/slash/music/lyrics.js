@@ -5,6 +5,7 @@ const pageModule = require("../../../modules/util/page");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const lyricsFinder = require("lyrics-finder");
 const _ = require("lodash");
+const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
 
 module.exports = {
 	// The data needed to register slash commands to Discord.
@@ -33,7 +34,7 @@ module.exports = {
 
 		if (!song && !queue)
 			return interaction.reply({
-				content: `${client.emotes.error} | There is nothing playing!`,
+				embeds: [new ErrorEmbed("There is nothing playing!")],
 				ephemeral: true,
 			});
 
@@ -41,19 +42,17 @@ module.exports = {
 
 		await interaction.deferReply({ ephemeral: ephemeral });
 
-		song = song || queue.songs[0].name;
+		song = song || queue.songs[0].name.toLowerCase();
 
 		song = song.replace(
 			/lyrics|lyric|lyrical|official music video|\(official music video\)|audio|official|official video|official video hd|official hd video|offical video music|\(offical video music\)|extended|hd|(\[.+\])/gi,
 			""
 		);
 
-		// console.log(song);
-
 		let lyrics = await lyricsFinder(song);
 		if (!lyrics)
 			return interaction.editReply({
-				content: `${client.emotes.error} | No lyrics found for \`${song}\`!`,
+				embeds: [new ErrorEmbed(`No lyrics found for \`${song}\`!`)],
 				ephemeral: true,
 			});
 
@@ -69,7 +68,7 @@ module.exports = {
 
 		if (!pages.length)
 			return interaction.editReply({
-				content: `${client.emotes.error} | No lyrics found for \`${song}\`!`,
+				embeds: [new ErrorEmbed(` | No lyrics found for \`${song}\`!`)],
 				ephemeral: true,
 			});
 

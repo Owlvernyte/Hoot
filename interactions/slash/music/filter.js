@@ -1,7 +1,8 @@
 // Deconstructed the constants we need in this file.
 
-const { EmbedBuilder } = require("discord.js");
 const { SlashCommandBuilder } = require("@discordjs/builders");
+const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
+const SuccessEmbed = require("../../../constants/embeds/SuccessEmbed");
 const defaultFilters = Object.keys(require("distube").defaultFilters).map(
 	(mf) => {
 		return {
@@ -37,7 +38,7 @@ module.exports = {
 
 		if (!queue)
 			return interaction.reply({
-				content: `${client.emotes.error} | There is nothing playing!`,
+				embeds: [new ErrorEmbed("There is nothing playing!")],
 				ephemeral: true,
 			});
 
@@ -49,13 +50,12 @@ module.exports = {
 			else queue.filters.add(filter);
 		}
 
-		const Embed = new EmbedBuilder()
-			.setColor("Blurple")
-			.setTitle(`Current Queue Filter`)
-			.setDescription(`\`${queue.filters.names.join(", ") || "None"}\``);
-
 		interaction.reply({
-			embeds: [Embed],
+			embeds: [
+				new SuccessEmbed(
+					`\`${queue.filters.names.join(", ") || "None"}\``
+				).setTitle(`Current Queue Filter`),
+			],
 		});
 	},
 };

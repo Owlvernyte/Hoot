@@ -6,6 +6,8 @@ const {
 	TextInputStyle,
 } = require("discord.js");
 const { URL } = require("url");
+const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
+const SuccessEmbed = require("../../../constants/embeds/SuccessEmbed");
 
 module.exports = {
 	id: "pladdsong",
@@ -24,7 +26,7 @@ module.exports = {
 
 		if (exist === null)
 			return interaction.reply({
-				content: `${client.emotes.error} | This playlist doesn't exist!`,
+				embeds: [new ErrorEmbed(`This playlist doesn't exist!`)],
 				ephemeral: true,
 			});
 
@@ -86,11 +88,11 @@ module.exports = {
 					}
 
 					await i.editReply({
-						content: `${await addSong()}`,
+						embeds: [new SuccessEmbed(`${await addSong()}`)],
 					});
 				} catch (error) {
 					await i.editReply({
-						content: `${client.emotes.error} | ${error.message}`,
+						embeds: [new ErrorEmbed(`${error.message}`)],
 					});
 				}
 			})

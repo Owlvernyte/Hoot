@@ -2,6 +2,7 @@ const lyricsFinder = require("lyrics-finder");
 const _ = require("lodash");
 const { EmbedBuilder } = require("discord.js");
 const pageModule = require("../../../modules/util/page");
+const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
 
 module.exports = {
 	id: "lyrics",
@@ -10,12 +11,18 @@ module.exports = {
 		const { client, guild, message } = interaction;
 		await interaction.deferReply({ ephemeral: true });
 
-		let song = message.embeds[0].title;
+		let song = message.embeds[0].title.toLowerCase();
+
+		song = song.replace(
+			/lyrics|lyric|lyrical|official music video|\(official music video\)|audio|official|official video|official video hd|official hd video|offical video music|\(offical video music\)|extended|hd|:|(\[.+\])/gi,
+			""
+		);
+
 		let lyrics = await lyricsFinder(song);
 
 		if (!lyrics)
 			return interaction.editReply({
-				content: `${client.emotes.error} | No lyrics found for \`${song}\`!`,
+				embeds: [new ErrorEmbed(`No lyrics found for \`${song}\`!`)],
 				ephemeral: true,
 			});
 
@@ -31,7 +38,7 @@ module.exports = {
 
 		if (!pages.length)
 			return interaction.editReply({
-				content: `${client.emotes.error} | No lyrics found for \`${song}\`!`,
+				embeds: [new ErrorEmbed(`No lyrics found for \`${song}\`!`)],
 				ephemeral: true,
 			});
 

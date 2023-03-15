@@ -5,6 +5,8 @@ const {
 	TextInputBuilder,
 	TextInputStyle,
 } = require("discord.js");
+const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
+const SuccessEmbed = require("../../../constants/embeds/SuccessEmbed");
 
 module.exports = {
 	id: "plrename",
@@ -15,7 +17,11 @@ module.exports = {
 
 		if (name === "Favorite")
 			return interaction.reply({
-				content: `${client.emotes.error} | This playlist doesn't exist!`,
+				embeds: [
+					new ErrorEmbed(
+						`You cannot do it as its the name of the default playlist!`
+					),
+				],
 				ephemeral: true,
 			});
 
@@ -28,7 +34,7 @@ module.exports = {
 
 		if (exist === null)
 			return interaction.reply({
-				content: `${client.emotes.error} | This playlist doesn't exist!`,
+				embeds: [new ErrorEmbed(`This playlist doesn't exist!`)],
 				ephemeral: true,
 			});
 
@@ -56,7 +62,7 @@ module.exports = {
 				const newName = i.fields.getTextInputValue("name");
 				if (newName === "Favorite")
 					return await i.reply({
-						content: `${client.emotes.error} | You cannot change to this name!`,
+						embeds: [new ErrorEmbed(`You cannot change to this name!`)],
 						ephemeral: true,
 					});
 
@@ -74,11 +80,13 @@ module.exports = {
 				);
 
 				await i.reply({
-					content: `${
+					embeds: [
 						affectedRows > 0
-							? `${client.emotes.success} | Changed from \`${name}\` to **${newName}**!`
-							: `${client.emotes.error} | Failed to change \`${name}\` to **${newName}**`
-					}`,
+							? new SuccessEmbed(`Changed from \`${name}\` to **${newName}**!`)
+							: new ErrorEmbed(
+									`Failed to change \`${name}\` to **${newName}**`
+							  ),
+					],
 					ephemeral: true,
 				});
 
