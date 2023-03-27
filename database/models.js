@@ -1,7 +1,8 @@
 // const Sequelize = require("sequelize");
+const config = require("../config.json");
+if (!config.use_database) return;
 const fs = require("fs");
 const sequelize = require("./db")();
-const config = require("../config.json");
 
 const models = {};
 

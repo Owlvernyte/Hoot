@@ -3,7 +3,7 @@ const config = require("../config.json");
 // const fs = require("fs");
 
 module.exports = () => {
-	if (!config.use_database) return;
+	if (!config.use_database) return () => null;
 	dbType = config.use_database;
 	console.log("[DB] Connecting database type: " + dbType);
 
