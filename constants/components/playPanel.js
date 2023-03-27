@@ -21,12 +21,12 @@ module.exports = (state, queue, client) => [
 			.setCustomId("shuffle")
 			.setDisabled(state)
 			.setEmoji(client.emotes.shuffle)
-			.setStyle(ButtonStyle.Secondary),
-		new ButtonBuilder()
-			.setCustomId("addtopl")
-			.setDisabled(state)
-			.setEmoji(client.emotes.addtoplaylist)
-			.setStyle(ButtonStyle.Primary)
+			.setStyle(ButtonStyle.Secondary)
+		// new ButtonBuilder()
+		// 	.setCustomId("addtopl")
+		// 	.setDisabled(state)
+		// 	.setEmoji(client.emotes.addtoplaylist)
+		// 	.setStyle(ButtonStyle.Primary)
 	),
 	new ActionRowBuilder().addComponents(
 		new ButtonBuilder()
@@ -54,11 +54,11 @@ module.exports = (state, queue, client) => [
 						: client.emotes.loop.song
 					: client.emotes.loop.queue
 			)
-			.setStyle(queue.repeatMode ? ButtonStyle.Secondary : ButtonStyle.Danger),
-		new ButtonBuilder()
-			.setCustomId("lyrics")
-			.setDisabled(state)
-			.setEmoji(client.emotes.lyrics)
-			.setStyle(ButtonStyle.Secondary)
+			.setStyle(queue.repeatMode ? ButtonStyle.Secondary : ButtonStyle.Danger)
+		// new ButtonBuilder()
+		// 	.setCustomId("lyrics")
+		// 	.setDisabled(state)
+		// 	.setEmoji(client.emotes.lyrics)
+		// 	.setStyle(ButtonStyle.Secondary)
 	),
 ];

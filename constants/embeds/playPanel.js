@@ -13,13 +13,12 @@ module.exports = (song, queue, client) => [
 			name: `${song.user.tag}`,
 			iconURL: `${song.user.displayAvatarURL()}`,
 		})
-		.setTitle(`${song.name} - ${song.formattedDuration}`)
+		.setTitle(`${song.name}`)
 		.setURL(song.url)
 		.setThumbnail(song.thumbnail)
+		.setDescription(`⌛ ${song.formattedDuration} | ${client.status(queue)}`)
 		.setFooter({
-			text: `${
-				queue.starter.user.tag
-			} | ${client.status(queue)}`,
-            iconURL: `${queue.starter.user.displayAvatarURL()}`
+			text: `${queue.starter.user.tag} 💂‍♂️`,
+			iconURL: `${queue.starter.user.displayAvatarURL()}`,
 		}),
 ];
