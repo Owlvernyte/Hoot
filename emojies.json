@@ -1,0 +1,31 @@
+{
+    "warning": "⚠",
+    "forward": "⏩",
+    "backward": "⏪",
+    "addtoplaylist": "➕",
+    "lyrics": "📃",
+    "play": "▶️",
+    "stop": "⏹️",
+    "pause": "⏸",
+    "playorpause": "⏯",
+    "shuffle": "🔀",
+    "queue": "📄",
+    "success": "☑️",
+    "next": "⏭",
+    "previous": "⏮",
+    "repeat": "🔁",
+    "error": "❌",
+    "on": "🟢",
+    "off": "🔴",
+    "loop": {
+        "queue": "🔁",
+        "song": "🔂",
+        "off": "⬇"
+    },
+    "volume": {
+        "high": "🔊",
+        "medium": "🔉",
+        "low": "🔈",
+        "muted": "🔇"
+    }
+}

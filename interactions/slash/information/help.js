@@ -13,6 +13,21 @@ const {
 	ApplicationCommandType,
 } = require("discord-api-types/v10");
 
+const {
+	client_id,
+	support_server_id,
+	topggToken,
+	website,
+} = require("../../../config.json");
+
+const choices = [
+	{ name: "Get command list", value: "commands" },
+	{ name: "Get relevant links", value: "links" },
+];
+
+if (!!support_server_id)
+	choices.push({ name: "Support server", value: "support" });
+
 module.exports = {
 	// The data needed to register slash commands to Discord.
 
@@ -24,11 +39,7 @@ module.exports = {
 				.setName("topic")
 				.setDescription("Select a topic")
 				.setRequired(true)
-				.addChoices(
-					{ name: "Get command list", value: "commands" },
-					{ name: "Get relevant links", value: "links" },
-					{ name: "Support server", value: "support" }
-				)
+				.addChoices(...choices)
 		),
 	category: "information",
 
@@ -144,27 +155,31 @@ module.exports = {
 				`> Note: \`Not Recommend Invite Link\` is full permission (Administrator) invite link (Use as your own risk, we refuse to take responsibility if there is anything wrong with your server/data. Suggest to use if and only when the bot is not working correctly in your server).`
 			);
 
+			const buttons = [
+				new ButtonBuilder()
+					.setStyle(ButtonStyle.Link)
+					.setLabel("Invite Link (Recommend)")
+					.setURL(defaultInviteLink),
+				new ButtonBuilder()
+					.setStyle(ButtonStyle.Link)
+					.setLabel("Invite Link (Not Recommend)")
+					.setURL(adminInviteLink),
+			];
+
+			if (!!topggToken)
+				buttons.push(
+					new ButtonBuilder()
+						.setStyle(ButtonStyle.Link)
+						.setLabel("Vote")
+						.setURL(`https://top.gg/bot/${client_id}/vote`)
+				);
+
 			await interaction.reply({
 				embeds: [helpEmbed],
-				components: [
-					new ActionRowBuilder().addComponents(
-						new ButtonBuilder()
-							.setStyle(ButtonStyle.Link)
-							.setLabel("Invite Link (Recommend)")
-							.setURL(defaultInviteLink),
-						new ButtonBuilder()
-							.setStyle(ButtonStyle.Link)
-							.setLabel("Invite Link (Not Recommend)")
-							.setURL(adminInviteLink),
-						new ButtonBuilder()
-							.setStyle(ButtonStyle.Link)
-							.setLabel("Vote")
-							.setURL(`https://top.gg/bot/804616628359921684/vote`)
-					),
-				],
+				components: [new ActionRowBuilder().addComponents(...buttons)],
 			});
-		} else if (topic === "support") {
-			const supportGuild = await client.guilds.fetch("830110554604961824");
+		} else if (topic === "support" && !!support_server_id) {
+			const supportGuild = await client.guilds.fetch(support_server_id);
 
 			await interaction.reply({
 				content: `${await supportGuild.invites.create(
