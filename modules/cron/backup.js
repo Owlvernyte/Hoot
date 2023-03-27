@@ -2,7 +2,7 @@ const cron = require("node-cron");
 const fs = require("fs");
 const {
 	backup_channel_id,
-	discloud_link,
+	backup_url,
 	database,
 	modules,
 } = require("../../config.json");
@@ -12,11 +12,12 @@ const {
  * @param {import("discord.js").Client} client
  */
 module.exports = (client) => {
+	// This backup using Discloud Repo: https://github.com/napthedev/discloud
 	if (!modules.use_backup || modules.use_backup !== "yes") return;
 
 	if (
 		modules.use_backup === "yes" &&
-		(!backup_channel_id || !discloud_link || !database)
+		(!backup_channel_id || !backup_url || !database)
 	)
 		throw new Error("[CRON/BACKUP] Missing configs");
 
@@ -28,7 +29,7 @@ module.exports = (client) => {
 			"utf8"
 		);
 
-		fetch(discloud_link, {
+		fetch(backup_url, {
 			method: "POST",
 			body: readableStream,
 		})

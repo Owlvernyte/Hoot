@@ -43,6 +43,48 @@ It doesn't use normal prefix, use Slash Command instead. /play [song name] to st
 
 _For more examples, please refer to the [Documentation](https://owlvernyte.tk)_
 
+## Self Host
+
+A `config.json` file will be required (rename `config.example.json`):
+```json
+{
+	"bot_name": "the Bot name",
+    "modules": {
+        "use_server": "no",
+        "use_backup": "no",
+        "use_status_changer": "no"
+    },
+    "prefix": "-",
+    "support_server_id": "Your Support Server ID",
+	"token": "Your Discord Bot Token",
+	"owner": "Your Discord ID",
+	"client_id": "Your Discord Application Client ID",
+	"test_guild_id": "Your Testing Discord Server",
+	"backup_channel_id": "",
+	"backup_url": "",
+	"testers": [
+		"tester ID 1",
+		"tester ID 2"
+	],
+	"use_database": "sqlite",
+	"database": {
+		"name": "database_name",
+		"mysql": {
+			"host": "database host",
+			"user": "database user",
+			"pass": "database pass",
+			"port": 3306
+		},
+		"sqlite": {
+			"file": "json.sqlite"
+		}
+	},
+	"topggToken": "",
+	"dev": "on",
+	"port": 3000
+}
+```
+
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.

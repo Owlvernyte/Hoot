@@ -17,7 +17,6 @@ const {
 	client_id,
 	support_server_id,
 	topggToken,
-	website,
 } = require("../../../config.json");
 
 const choices = [
