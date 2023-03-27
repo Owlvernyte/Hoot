@@ -13,6 +13,7 @@ const { DisTube, ExtractorPlugin } = require("distube");
 const { SpotifyPlugin } = require("@distube/spotify");
 const { SoundCloudPlugin } = require("@distube/soundcloud");
 const { YtDlpPlugin } = require("@distube/yt-dlp");
+const pjConfig = require("./config.json");
 const DB = require("./database/models");
 
 const intents = [
@@ -69,7 +70,7 @@ for (const file of eventFiles) {
 /**********************************************************************/
 // Define Collection of Commands, Slash Commands and cooldowns
 
-client.config = require("./config.json");
+client.config = pjConfig;
 client.distube = new DisTube(client, {
 	leaveOnStop: false,
 	// emitNewSongOnly: true,
@@ -94,7 +95,7 @@ client.cooldowns = new Collection();
 // client.triggers = new Collection();
 client.emotes = require("./emojies.json");
 client.maxSongs = 100;
-client.db = DB;
+if (!!pjConfig.use_database) client.db = DB;
 client.util = {};
 
 // util
