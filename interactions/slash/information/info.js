@@ -81,8 +81,7 @@ module.exports = {
 						"```",
 					inline: true,
 				},
-			])
-			.setFooter({ text: `https://owlvernyte.tk` });
+			]);
 
 		await interaction.reply({
 			embeds: [Embed],
