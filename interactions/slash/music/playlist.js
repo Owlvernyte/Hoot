@@ -62,7 +62,7 @@ module.exports = {
 		),
 	// inVoiceChannel: true,
 	category: "music",
-	skip: !!use_database,
+	skip: !use_database,
 	async execute(interaction) {
 		const { client } = interaction;
 		const subcommand = interaction.options.getSubcommand();
