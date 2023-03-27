@@ -85,6 +85,8 @@ A `config.json` file will be required (rename `config.example.json`):
 }
 ```
 
+Run the bot with [PM2](https://pm2.keymetrics.io): `pm2 start ecosystem.config.js`
+
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
