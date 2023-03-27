@@ -17,5 +17,6 @@
 // 	});
 // }
 
+const { modules } = require("./config.json");
 const bot = require("./bot");
-const server = require("./server");
+const server = modules.use_server === "yes" ? require("./server") : null;

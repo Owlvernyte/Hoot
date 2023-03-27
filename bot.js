@@ -304,16 +304,30 @@ const commandJsonData = [
  * @param {import("distube").Queue} queue
  * @returns
  */
-const status = (queue) =>
-	`Volume: ${queue.volume}% | Filter: ${
-		queue.filters.names.join(", ") || "Off"
-	} | Loop: ${
-		queue.repeatMode
-			? queue.repeatMode === 2
-				? "All Queue"
-				: "This Song"
-			: "Off"
-	} | Autoplay: ${queue.autoplay ? "On" : "Off"}`;
+const status = (queue) => {
+	const volumeIcon =
+		queue.volume > 75
+			? "🔊"
+			: queue.volume > 25
+			? "🔉"
+			: queue.volume > 0
+			? "🔈"
+			: "🔇";
+
+	const loopMode = queue.repeatMode
+		? queue.repeatMode === 2
+			? " | 🔁 Queue"
+			: " | 🔂 This song"
+		: "";
+
+	const filter = !queue.filters.names.length
+		? ""
+		: ` | Filter: ${queue.filters.names.join(", ")}`;
+
+	const autoplay = !!queue.autoplay ? ` | 🅰UTOPLAY` : "";
+
+	return `${volumeIcon} ${queue.volume}%${autoplay}${loopMode}${filter}`;
+};
 
 client.status = status;
 

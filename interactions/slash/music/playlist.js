@@ -3,6 +3,7 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
 const SuccessEmbed = require("../../../constants/embeds/SuccessEmbed");
+const {use_database} = require("../../../config.json")
 
 module.exports = {
 	// The data needed to register slash commands to Discord.
@@ -61,7 +62,7 @@ module.exports = {
 		),
 	// inVoiceChannel: true,
 	category: "music",
-	// skip: true,
+	skip: !!use_database,
 	async execute(interaction) {
 		const { client } = interaction;
 		const subcommand = interaction.options.getSubcommand();

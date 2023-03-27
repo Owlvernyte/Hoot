@@ -1,7 +1,8 @@
+const { bot_name } = require("./config.json");
 module.exports = {
 	apps: [
 		{
-			name: "Hoot",
+			name: bot_name || "Hoot",
 			script: "./index.js",
 			env_production: {
 				NODE_ENV: "production",
