@@ -1,9 +1,9 @@
 // Deconstructed the constants we need in this file.
 
 const { SlashCommandBuilder } = require("@discordjs/builders");
-
 const SuccessEmbed = require("../../../constants/embeds/SuccessEmbed");
 const { use_database } = require("../../../config.json");
+const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
 
 module.exports = {
 	// The data needed to register slash commands to Discord.

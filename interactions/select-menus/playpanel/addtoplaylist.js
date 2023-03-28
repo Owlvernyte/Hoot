@@ -1,4 +1,5 @@
 const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
+const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
 
 const SuccessEmbed = require("../../../constants/embeds/SuccessEmbed");
 const WarningEmbed = require("../../../constants/embeds/WarningEmbed");
