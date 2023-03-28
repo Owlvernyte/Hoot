@@ -1,9 +1,9 @@
 // Deconstructed the constants we need in this file.
 
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
+
 const SuccessEmbed = require("../../../constants/embeds/SuccessEmbed");
-const {use_database} = require("../../../config.json")
+const { use_database } = require("../../../config.json");
 
 module.exports = {
 	// The data needed to register slash commands to Discord.
@@ -63,6 +63,7 @@ module.exports = {
 	// inVoiceChannel: true,
 	category: "music",
 	skip: !use_database,
+	// maintain: true,
 	async execute(interaction) {
 		const { client } = interaction;
 		const subcommand = interaction.options.getSubcommand();

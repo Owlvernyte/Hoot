@@ -1,7 +1,5 @@
 // const { EmbedBuilder } = require("discord.js");
 
-const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
-
 module.exports = {
 	id: "pause",
 
@@ -10,11 +8,7 @@ module.exports = {
 
 		const queue = client.distube.getQueue(guild);
 
-		if (!queue)
-			return interaction.reply({
-				embeds: [new ErrorEmbed("There is nothing playing!")],
-				ephemeral: true,
-			});
+		if (!queue) throw new Error("There is nothing playing!");
 
 		if (
 			!queue.starter ||
@@ -22,10 +16,7 @@ module.exports = {
 			!queue.panelId ||
 			interaction.message.id !== queue.panelId
 		)
-			return interaction.reply({
-				embeds: [new ErrorEmbed(`You don't own this panel!`)],
-				ephemeral: true,
-			});
+			throw new Error(`You don't own this panel!`);
 
 		// console.log(queue);
 

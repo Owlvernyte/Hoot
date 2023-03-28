@@ -1,7 +1,6 @@
 // Deconstructed the constants we need in this file.
 
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
 const SuccessEmbed = require("../../../constants/embeds/SuccessEmbed");
 
 module.exports = {
@@ -19,30 +18,18 @@ module.exports = {
 		),
 	inVoiceChannel: true,
 	category: "music",
+	queueRequired: true,
 	async execute(interaction) {
 		const { client, message, guild } = interaction;
 
 		const queue = client.distube.getQueue(guild);
 
-		if (!queue)
-			return interaction.reply({
-				embeds: [new ErrorEmbed("There is nothing playing!")],
-				ephemeral: true,
-			});
-
 		const position = interaction.options.getInteger("position");
 
 		if (position > queue.songs.length - 1)
-			return interaction.reply({
-				embeds: [
-					new ErrorEmbed(
-						`The position you entered (\`${position}\`) is bigger than the queue length (\`${
-							queue.songs.length - 1
-						}\`)`
-					),
-				],
-				ephemeral: true,
-			});
+			throw new Error(`The position you entered (\`${position}\`) is bigger than the queue length (\`${
+                queue.songs.length - 1
+            }\`)`)
 
 		const removed = queue.songs.splice(position, 1).shift();
 

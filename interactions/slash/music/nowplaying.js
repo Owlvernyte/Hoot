@@ -12,16 +12,11 @@ module.exports = {
 		.setDescription("Whats the playing song?"),
 	inVoiceChannel: true,
 	category: "music",
+	queueRequired: true,
 	async execute(interaction) {
 		const { client, message, guild } = interaction;
 
 		const queue = client.distube.getQueue(guild);
-
-		if (!queue)
-			return interaction.reply({
-				embeds: [new ErrorEmbed("There is nothing playing!")],
-				ephemeral: true,
-			});
 
 		const song = queue.songs[0];
 

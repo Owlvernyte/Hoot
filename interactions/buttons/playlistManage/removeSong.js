@@ -4,7 +4,6 @@ const {
 	ModalBuilder,
 	TextInputBuilder,
 } = require("discord.js");
-const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
 
 module.exports = {
 	id: "pldelsong",
@@ -21,9 +20,6 @@ module.exports = {
 		});
 
 		if (exist === null)
-			return interaction.reply({
-				embeds: [new ErrorEmbed(`This playlist doesn't exist!`)],
-				ephemeral: true,
-			});
+			throw new Error(`This playlist doesn't exist!`)
 	},
 };

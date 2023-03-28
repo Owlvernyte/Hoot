@@ -1,9 +1,6 @@
 const {
-	EmbedBuilder,
 	ActionRowBuilder,
-	SelectMenuBuilder,
 } = require("discord.js");
-const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
 const InfoEmbed = require("../../../constants/embeds/InfoEmbed");
 
 module.exports = {
@@ -24,14 +21,9 @@ module.exports = {
 		});
 
 		if (!userPlaylistsModels.length)
-			return interaction.reply({
-				embeds: [
-					new ErrorEmbed(
-						`You have no playlist! Create one by using \`/playlist create\``
-					),
-				],
-				ephemeral: true,
-			});
+			throw new Error(
+				`You have no playlist! Create one by using \`/playlist create\``
+			);
 
 		const userPlaylistOpitons = userPlaylistsModels.map((model) => ({
 			label: `${model.dataValues.playlistId}`,

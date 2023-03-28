@@ -5,7 +5,6 @@ const {
 	TextInputBuilder,
 	TextInputStyle,
 } = require("discord.js");
-const { URL } = require("url");
 const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
 const SuccessEmbed = require("../../../constants/embeds/SuccessEmbed");
 
@@ -24,11 +23,7 @@ module.exports = {
 			},
 		});
 
-		if (exist === null)
-			return interaction.reply({
-				embeds: [new ErrorEmbed(`This playlist doesn't exist!`)],
-				ephemeral: true,
-			});
+		if (exist === null) throw new Error(`This playlist doesn't exist!`);
 
 		const songsInput = new TextInputBuilder()
 			.setCustomId("links")
@@ -80,15 +75,11 @@ module.exports = {
 							}
 						);
 
-						return `${
-							affectedRows > 0
-								? new SuccessEmbed(
-										`Added \`${resolved.songs.length}\` songs to your **${exist.dataValues.playlistId}** playlist!`
-								  )
-								: new ErrorEmbed(
-										`Failed to add \`${resolved.songs.length}\` to your **${exist.dataValues.playlistId}** playlist`
-								  )
-						}`;
+						return affectedRows > 0
+							? new SuccessEmbed(
+									`Added \`${resolved.songs.length}\` songs to your **${exist.dataValues.playlistId}** playlist!`
+							  )
+							: new ErrorEmbed();
 					}
 
 					await i.editReply({

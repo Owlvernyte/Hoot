@@ -31,16 +31,29 @@ module.exports = {
 			});
 		}
 
+		if (command.queueRequired) {
+			const queue = client.distube.getQueue(interaction.guildId);
+			if (!queue)
+				return interaction.reply({
+					embeds: [new ErrorEmbed("There is nothing playing!")],
+					ephemeral: true,
+				});
+		}
+
 		try {
 			await command.execute(interaction);
 		} catch (err) {
-			console.error(err);
+			console.error(
+				`guildId=${interaction.guildId}/channelId=${interaction.channelId}/userId=${interaction.user.id}/cmdName=${interaction.commandName}&cmdType=${interaction.commandType}`,
+				err
+			);
 			if (interaction.isRepliable() && !interaction.replied)
 				await interaction
 					.reply({
 						embeds: [
 							new ErrorEmbed(
-								"There was an issue while executing that command!"
+								err.message ||
+									"There was an issue while executing that command!"
 							),
 						],
 						ephemeral: true,

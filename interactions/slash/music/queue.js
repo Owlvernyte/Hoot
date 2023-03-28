@@ -3,7 +3,6 @@
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require("discord.js");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const _ = require("lodash");
-const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
 
 module.exports = {
 	// The data needed to register slash commands to Discord.
@@ -13,16 +12,11 @@ module.exports = {
 		.setDescription("Shows music queue"),
 	inVoiceChannel: true,
 	category: "music",
+	queueRequired: true,
 	async execute(interaction) {
 		const { client, message, guild } = interaction;
 
 		const queue = client.distube.getQueue(guild);
-
-		if (!queue)
-			return interaction.reply({
-				embeds: [new ErrorEmbed("There is nothing playing!")],
-				ephemeral: true,
-			});
 
 		const songs = [...queue.songs];
 
@@ -41,7 +35,7 @@ module.exports = {
 		const pages = splittedSongs.map((c) =>
 			new EmbedBuilder()
 				.setTitle(`${totalSongs} songs in queue`)
-				.setDescription(`${c.join("\n")}`)
+				.setDescription(`${c.reverse().join("\n")}`)
 				.addFields({
 					name: `Now Playing`,
 					value: `**[${np.name}](${np.url}) - \`${np.formattedDuration}\`**`,

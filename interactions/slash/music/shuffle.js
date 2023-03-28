@@ -2,7 +2,6 @@
 
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const SuccessEmbed = require("../../../constants/embeds/SuccessEmbed");
-const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
 
 module.exports = {
 	// The data needed to register slash commands to Discord.
@@ -12,16 +11,11 @@ module.exports = {
 		.setDescription("Shuffle the queue"),
 	inVoiceChannel: true,
 	category: "music",
+	queueRequired: true,
 	async execute(interaction) {
 		const { client, message, guild } = interaction;
 
 		const queue = client.distube.getQueue(guild);
-
-		if (!queue)
-			return interaction.reply({
-				embeds: [new ErrorEmbed("There is nothing playing!")],
-				ephemeral: true,
-			});
 
 		queue.shuffle();
 

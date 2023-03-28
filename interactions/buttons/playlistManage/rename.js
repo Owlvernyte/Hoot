@@ -16,14 +16,9 @@ module.exports = {
 		const name = message.embeds[0].title;
 
 		if (name === "Favorite")
-			return interaction.reply({
-				embeds: [
-					new ErrorEmbed(
-						`You cannot do it as its the name of the default playlist!`
-					),
-				],
-				ephemeral: true,
-			});
+			throw new Error(
+				`You cannot do it as its the name of the default playlist!`
+			);
 
 		const exist = await client.db.models.Playlists.findOne({
 			where: {
@@ -32,11 +27,7 @@ module.exports = {
 			},
 		});
 
-		if (exist === null)
-			return interaction.reply({
-				embeds: [new ErrorEmbed(`This playlist doesn't exist!`)],
-				ephemeral: true,
-			});
+		if (exist === null) throw new Error(`This playlist doesn't exist!`);
 
 		const newNameInput = new TextInputBuilder()
 			.setCustomId("name")

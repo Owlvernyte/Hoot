@@ -1,7 +1,6 @@
 // Deconstructed the constants we need in this file.
 
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
 const InfoEmbed = require("../../../constants/embeds/InfoEmbed");
 
 module.exports = {
@@ -12,17 +11,11 @@ module.exports = {
 		.setDescription("Toggle autoplay mode"),
 	category: "music",
 	inVoiceChannel: true,
-
+	queueRequired: true,
 	async execute(interaction) {
 		const { client, message, guild } = interaction;
 
 		const queue = client.distube.getQueue(guild);
-
-		if (!queue)
-			return interaction.reply({
-				embeds: [new ErrorEmbed("There is nothing playing!")],
-				ephemeral: true,
-			});
 
 		const autoplay = queue.toggleAutoplay();
 

@@ -1,7 +1,6 @@
 // Deconstructed the constants we need in this file.
 
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
 const SuccessEmbed = require("../../../constants/embeds/SuccessEmbed");
 
 module.exports = {
@@ -26,40 +25,26 @@ module.exports = {
 		),
 	inVoiceChannel: true,
 	category: "music",
+	queueRequired: true,
 	async execute(interaction) {
 		const { client, message, guild } = interaction;
-
-		const queue = client.distube.getQueue(guild);
-
-		if (!queue)
-			return interaction.reply({
-				embeds: [new ErrorEmbed("There is nothing playing!")],
-				ephemeral: true,
-			});
 
 		const old_position = interaction.options.getInteger("old_position");
 		const new_position = interaction.options.getInteger("new_position");
 
-		if (old_position === new_position)
-			return interaction.reply({
-				embeds: [new ErrorEmbed(`Nothing changed`)],
-				ephemeral: true,
-			});
+		if (old_position === new_position) throw new Error(`Nothing changed`);
+
+		const queue = client.distube.getQueue(guild);
 
 		if (
 			old_position > queue.songs.length - 1 ||
 			new_position > queue.songs.length - 1
 		)
-			return interaction.reply({
-				embeds: [
-					new ErrorEmbed(
-						`One of two positions you entered (Old: \`${old_position}\`, New: \`${new_position}\`) is bigger than the queue length (\`${
-							queue.songs.length - 1
-						}\`)`
-					),
-				],
-				ephemeral: true,
-			});
+			throw new Error(
+				`One of two positions you entered (Old: \`${old_position}\`, New: \`${new_position}\`) is bigger than the queue length (\`${
+					queue.songs.length - 1
+				}\`)`
+			);
 
 		function array_move(arr, old_index, new_index) {
 			if (new_index >= arr.length) {

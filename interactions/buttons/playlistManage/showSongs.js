@@ -1,6 +1,5 @@
 const _ = require("lodash");
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require("discord.js");
-const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
 
 module.exports = {
 	id: "plshow",
@@ -16,17 +15,10 @@ module.exports = {
 			},
 		});
 
-		if (exist === null)
-			return interaction.reply({
-				embeds: [new ErrorEmbed(`This playlist doesn't exist!`)],
-				ephemeral: true,
-			});
+		if (exist === null) throw new Error(`This playlist doesn't exist!`);
 
 		if (!exist.dataValues.data.songs.length)
-			return interaction.reply({
-				embeds: [new ErrorEmbed(`This playlist doesn't have any song!`)],
-				ephemeral: true,
-			});
+			throw new Error(`This playlist doesn't have any song!`);
 
 		const playlist = await client.distube.createCustomPlaylist(
 			exist.dataValues.data.songs,

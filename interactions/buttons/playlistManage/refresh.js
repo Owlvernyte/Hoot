@@ -1,5 +1,3 @@
-const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
-
 module.exports = {
 	id: "plrefresh",
 
@@ -14,11 +12,7 @@ module.exports = {
 			},
 		});
 
-		if (exist === null)
-			return interaction.reply({
-				embeds: [new ErrorEmbed(`This playlist doesn't exist!`)],
-				ephemeral: true,
-			});
+		if (exist === null) throw new Error(`This playlist doesn't exist!`);
 
 		const managePanel = require("../../../constants/embeds/playlistManage");
 

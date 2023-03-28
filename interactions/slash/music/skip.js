@@ -2,7 +2,6 @@
 
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const SuccessEmbed = require("../../../constants/embeds/SuccessEmbed");
-const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
 const InfoEmbed = require("../../../constants/embeds/InfoEmbed");
 // const sequelize = require("sequelize");
 
@@ -19,38 +18,26 @@ module.exports = {
 		),
 	inVoiceChannel: true,
 	category: "music",
+	queueRequired: true,
 	async execute(interaction) {
-		const { client, message, guild } = interaction;
+		const { client, guild } = interaction;
 
 		const force = interaction.options?.getBoolean
 			? interaction.options.getBoolean("force")
 			: false;
 		const queue = client.distube.getQueue(guild);
 
-		if (!queue)
-			return interaction.reply({
-				embeds: [new ErrorEmbed("There is nothing playing!")],
-				ephemeral: true,
-			});
-
 		async function skip() {
-			try {
-				const song = await queue.skip();
+			const song = await queue.skip();
 
-				interaction.reply({
-					embeds: [
-						new SuccessEmbed(`Skipped!`).addFields({
-							name: `Now Playing`,
-							value: `[\`${song.name}\`](${song.url})`,
-						}),
-					],
-				});
-			} catch (error) {
-				interaction.reply({
-					embeds: [new ErrorEmbed(`${error.message}`)],
-					ephemeral: true,
-				});
-			}
+			interaction.reply({
+				embeds: [
+					new SuccessEmbed(`Skipped!`).addFields({
+						name: `Now Playing`,
+						value: `[\`${song.name}\`](${song.url})`,
+					}),
+				],
+			});
 		}
 
 		if (force && interaction.user.id == queue.starter.user.id) return skip();
@@ -63,11 +50,7 @@ module.exports = {
 			if (queue.starter.user.id == interaction.user.id) {
 				queue.skipVotes.clear();
 				skip();
-			} else
-				return interaction.reply({
-					embeds: [new ErrorEmbed(`You have already voted!`)],
-					ephemeral: true,
-				});
+			} else throw new Error(`You have already voted!`);
 		}
 
 		queue.skipVotes.set(interaction.user.id, interaction.member);

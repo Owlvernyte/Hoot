@@ -29,7 +29,10 @@ module.exports = {
 			await command.execute(interaction);
 			return;
 		} catch (err) {
-			console.error(err);
+			console.error(
+				`guildId=${interaction.guildId}/channelId=${interaction.channelId}/userId=${interaction.user.id}/cmdName=${interaction.commandName}&cmdType=${interaction.commandType}`,
+				err
+			);
 			await interaction.reply({
 				embeds: [
 					new ErrorEmbed(

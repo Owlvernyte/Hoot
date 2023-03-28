@@ -1,5 +1,3 @@
-const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
-
 module.exports = {
 	id: "volumeup",
 
@@ -8,11 +6,7 @@ module.exports = {
 
 		const queue = client.distube.getQueue(guild);
 
-		if (!queue)
-			return interaction.reply({
-				embeds: [new ErrorEmbed("There is nothing playing!")],
-				ephemeral: true,
-			});
+		if (!queue) throw new Error("There is nothing playing!");
 
 		if (
 			!queue.starter ||
@@ -20,16 +14,9 @@ module.exports = {
 			!queue.panelId ||
 			interaction.message.id !== queue.panelId
 		)
-			return interaction.reply({
-				embeds: [new ErrorEmbed(`You don't own this panel!`)],
-				ephemeral: true,
-			});
+			throw new Error(`You don't own this panel!`);
 
-		if (queue.volume >= 100)
-			return interaction.reply({
-				embeds: [new ErrorEmbed(`Cannot up volume anymore!`)],
-				ephemeral: true,
-			});
+		if (queue.volume >= 100) throw new Error(`Cannot up volume anymore!`);
 
 		queue.setVolume(queue.volume + 10);
 

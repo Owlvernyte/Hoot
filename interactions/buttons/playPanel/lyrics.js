@@ -2,7 +2,6 @@ const lyricsFinder = require("lyrics-finder");
 const _ = require("lodash");
 const { EmbedBuilder } = require("discord.js");
 const pageModule = require("../../../modules/util/page");
-const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
 
 module.exports = {
 	id: "lyrics",
@@ -20,11 +19,7 @@ module.exports = {
 
 		let lyrics = await lyricsFinder(song);
 
-		if (!lyrics)
-			return interaction.editReply({
-				embeds: [new ErrorEmbed(`No lyrics found for \`${song}\`!`)],
-				ephemeral: true,
-			});
+		if (!lyrics) throw new Error(`No lyrics found for \`${song}\`!`);
 
 		lyrics = lyrics.split("\n");
 		let splitedLyrics = _.chunk(lyrics, 40);
@@ -36,11 +31,7 @@ module.exports = {
 				.setDescription(ly.join("\n"))
 		);
 
-		if (!pages.length)
-			return interaction.editReply({
-				embeds: [new ErrorEmbed(`No lyrics found for \`${song}\`!`)],
-				ephemeral: true,
-			});
+		if (!pages.length) throw new Error(`No lyrics found for \`${song}\`!`);
 
 		if (pages.length < 2)
 			return interaction.editReply({

@@ -1,7 +1,6 @@
 // Deconstructed the constants we need in this file.
 
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
 const SuccessEmbed = require("../../../constants/embeds/SuccessEmbed");
 const defaultFilters = Object.keys(require("distube").defaultFilters).map(
 	(mf) => {
@@ -37,10 +36,7 @@ module.exports = {
 		const queue = client.distube.getQueue(guild);
 
 		if (!queue)
-			return interaction.reply({
-				embeds: [new ErrorEmbed("There is nothing playing!")],
-				ephemeral: true,
-			});
+			throw new Error("There is nothing playing!")
 
 		const filter = interaction.options.getString("filter");
 

@@ -5,7 +5,6 @@ const pageModule = require("../../../modules/util/page");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const lyricsFinder = require("lyrics-finder");
 const _ = require("lodash");
-const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
 
 module.exports = {
 	// The data needed to register slash commands to Discord.
@@ -33,10 +32,7 @@ module.exports = {
 		const queue = client.distube.getQueue(guild);
 
 		if (!song && !queue)
-			return interaction.reply({
-				embeds: [new ErrorEmbed("There is nothing playing!")],
-				ephemeral: true,
-			});
+			throw new Error("There is nothing playing!")
 
 		const ephemeral = interaction.options.getBoolean("ephemeral") || false;
 
@@ -51,10 +47,7 @@ module.exports = {
 
 		let lyrics = await lyricsFinder(song);
 		if (!lyrics)
-			return interaction.editReply({
-				embeds: [new ErrorEmbed(`No lyrics found for \`${song}\`!`)],
-				ephemeral: true,
-			});
+			throw new Error(`No lyrics found for \`${song}\`!`)
 
 		lyrics = lyrics.split("\n");
 		let splitedLyrics = _.chunk(lyrics, 40);
@@ -67,10 +60,7 @@ module.exports = {
 		);
 
 		if (!pages.length)
-			return interaction.editReply({
-				embeds: [new ErrorEmbed(` | No lyrics found for \`${song}\`!`)],
-				ephemeral: true,
-			});
+			throw new Error(`No lyrics found for \`${song}\`!`)
 
 		if (pages.length < 2)
 			return interaction.editReply({

@@ -3,7 +3,6 @@
 const { Constants, EmbedBuilder, PermissionFlagsBits } = require("discord.js");
 const { ChannelType } = require("discord-api-types/v10");
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
 const SuccessEmbed = require("../../../constants/embeds/SuccessEmbed");
 
 module.exports = {
@@ -30,12 +29,7 @@ module.exports = {
 			interaction.channel;
 
 		if (!Constants.VoiceBasedChannelTypes.includes(voiceChannel?.type)) {
-			return interaction.reply({
-				embeds: [
-					new ErrorEmbed(`${voiceChannel} is not a valid voice channel!`),
-				],
-				ephemeral: true,
-			});
+			throw new Error(`${voiceChannel} is not a valid voice channel!`)
 		}
 
 		interaction.reply({
