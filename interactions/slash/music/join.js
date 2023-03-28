@@ -19,6 +19,7 @@ module.exports = {
 		)
 		.setDefaultMemberPermissions(PermissionFlagsBits.Connect),
 	// inVoiceChannel: true,
+    skip: true,
 	category: "music",
 	async execute(interaction) {
 		const { client, message, guild } = interaction;
