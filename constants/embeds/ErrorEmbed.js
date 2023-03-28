@@ -1,5 +1,5 @@
 const { EmbedBuilder } = require("discord.js");
-const { emoji } = require("../../config.json");
+const { error } = require("../../emojies.json");
 
 class ErrorEmbed extends EmbedBuilder {
 	/**
@@ -9,7 +9,7 @@ class ErrorEmbed extends EmbedBuilder {
 	constructor(description) {
 		super();
 		this.setColor("Red");
-		this.setDescription(`${emoji.error} | ${description}`);
+		this.setDescription(`${error} | ${description}`);
 	}
 }
 
