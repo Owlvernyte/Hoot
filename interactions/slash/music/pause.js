@@ -18,6 +18,9 @@ module.exports = {
 
 		const queue = client.distube.getQueue(guild);
 
+        if (queue.starter.user.id != interaction.user.id)
+			throw new Error(`You have no right to do this!`);
+
 		if (queue.paused) {
 			queue.resume();
 			return interaction.reply({

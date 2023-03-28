@@ -30,13 +30,14 @@ module.exports = {
 		),
 	inVoiceChannel: true,
 	category: "music",
+	queueRequired: true,
 	async execute(interaction) {
-		const { client, message, guild } = interaction;
+		const { client, guild } = interaction;
 
 		const queue = client.distube.getQueue(guild);
 
-		if (!queue)
-			throw new Error("There is nothing playing!")
+        if (queue.starter.user.id != interaction.user.id)
+			throw new Error(`You have no right to do this!`);
 
 		const filter = interaction.options.getString("filter");
 

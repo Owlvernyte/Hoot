@@ -29,12 +29,16 @@ module.exports = {
 	async execute(interaction) {
 		const { client, message, guild } = interaction;
 
+
 		const old_position = interaction.options.getInteger("old_position");
 		const new_position = interaction.options.getInteger("new_position");
 
 		if (old_position === new_position) throw new Error(`Nothing changed`);
 
 		const queue = client.distube.getQueue(guild);
+
+        if (queue.starter.user.id != interaction.user.id)
+			throw new Error(`You have no right to do this!`);
 
 		if (
 			old_position > queue.songs.length - 1 ||

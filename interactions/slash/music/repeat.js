@@ -28,6 +28,9 @@ module.exports = {
 
 		const queue = client.distube.getQueue(guild);
 
+        if (queue.starter.user.id != interaction.user.id)
+			throw new Error(`You have no right to do this!`);
+
 		let mode = parseInt(interaction.options.getString("mode"));
 
 		mode = queue.setRepeatMode(mode);

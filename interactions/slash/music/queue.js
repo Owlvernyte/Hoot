@@ -41,6 +41,10 @@ module.exports = {
 					value: `**[${np.name}](${np.url}) - \`${np.formattedDuration}\`**`,
 				})
 				.setColor("Random")
+				.setFooter({
+					text: `${queue.starter.user.tag} 💂‍♂️`,
+					iconURL: `${queue.starter.user.displayAvatarURL()}`,
+				})
 		);
 
 		if (!pages.length)
@@ -52,7 +56,11 @@ module.exports = {
 						.setDescription(
 							`**[${np.name}](${np.url}) - \`${np.formattedDuration}\`**`
 						)
-						.setThumbnail(np.thumbnail),
+						.setThumbnail(np.thumbnail)
+						.setFooter({
+							text: `${queue.starter.user.tag} 💂‍♂️`,
+							iconURL: `${queue.starter.user.displayAvatarURL()}`,
+						}),
 				],
 			});
 

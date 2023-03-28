@@ -11,8 +11,14 @@ module.exports = {
 		.setDescription("Leave the current voice"),
 	inVoiceChannel: true,
 	category: "music",
+	queueRequired: true,
 	async execute(interaction) {
 		const { client, message, guild } = interaction;
+
+		const queue = client.distube.getQueue(guild);
+
+		if (queue.starter.user.id != interaction.user.id)
+			throw new Error(`You have no right to do this!`);
 
 		client.distube.voices.leave(guild);
 

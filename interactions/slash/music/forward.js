@@ -23,6 +23,10 @@ module.exports = {
 		const { client, message, guild } = interaction;
 
 		const queue = client.distube.getQueue(guild);
+
+        if (queue.starter.user.id != interaction.user.id)
+			throw new Error(`You have no right to do this!`);
+
 		const time = interaction.options.getInteger("time");
 		const seekedTime = queue.currentTime + time;
 
