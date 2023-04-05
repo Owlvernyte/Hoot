@@ -3,6 +3,7 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const SuccessEmbed = require("../../../constants/embeds/SuccessEmbed");
 const InfoEmbed = require("../../../constants/embeds/InfoEmbed");
+const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
 // const sequelize = require("sequelize");
 
 module.exports = {
@@ -28,16 +29,28 @@ module.exports = {
 		const queue = client.distube.getQueue(guild);
 
 		async function skip() {
-			const song = await queue.skip();
+			try {
+				const song = await queue.skip();
 
-			interaction.reply({
-				embeds: [
-					new SuccessEmbed(`Skipped!`).addFields({
-						name: `Now Playing`,
-						value: `[\`${song.name}\`](${song.url})`,
-					}),
-				],
-			});
+				interaction.reply({
+					embeds: [
+						new SuccessEmbed(`Skipped!`).addFields({
+							name: `Now Playing`,
+							value: `[\`${song.name}\`](${song.url})`,
+						}),
+					],
+				});
+                return;
+			} catch (e) {
+				await interaction.reply({
+					embeds: [
+						new ErrorEmbed(
+							e?.message || `There was an issue while executing that button!`
+						),
+					],
+					ephemeral: true,
+				});
+			}
 		}
 
 		if (force && interaction.user.id == queue.starter.user.id) return skip();
@@ -48,8 +61,8 @@ module.exports = {
 
 		if (queue.skipVotes.has(interaction.user.id)) {
 			if (queue.starter.user.id == interaction.user.id) {
-				queue.skipVotes.clear();
 				skip();
+                return;
 			} else throw new Error(`You have already voted!`);
 		}
 
@@ -68,7 +81,6 @@ module.exports = {
 				],
 			});
 		else if (queue.skipVotes.size >= required) {
-			queue.skipVotes.clear();
 			skip();
 		}
 	},

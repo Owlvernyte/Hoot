@@ -46,7 +46,7 @@ module.exports = {
 			interaction.options.getChannel("destination") ||
 			interaction.member.voice.channel;
 
-		interaction.client.distube.play(voiceChannel, songName, {
+		client.distube.play(voiceChannel, songName, {
 			member: interaction.member,
 			textChannel: interaction.channel,
 			skip: skip,
@@ -55,6 +55,7 @@ module.exports = {
 				i: interaction,
 			},
 		});
+        return;
 	},
 	async autocomplete(interaction) {
 		const { client, guild } = interaction;

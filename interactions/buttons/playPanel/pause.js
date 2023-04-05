@@ -26,6 +26,6 @@ module.exports = {
 			queue.pause();
 		}
 
-		client.emit("updatePanel", interaction, queue);
+		client.emit("updatePanel", interaction);
 	},
 };

@@ -34,5 +34,7 @@ module.exports = {
 				new SuccessEmbed(`Volume set to \`${amount}\``),
 			],
 		});
+
+        client.emit("updatePanel", interaction);
 	},
 };

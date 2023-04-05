@@ -25,5 +25,7 @@ module.exports = {
 		interaction.reply({
 			embeds: [new SuccessEmbed(`Claimed!`)],
 		});
+
+        client.emit("updatePanel", interaction);
 	}
 };

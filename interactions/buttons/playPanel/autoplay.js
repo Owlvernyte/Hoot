@@ -21,7 +21,7 @@ module.exports = {
 
 		queue.toggleAutoplay();
 
-		client.emit("updatePanel", interaction, queue);
+		client.emit("updatePanel", interaction);
 		return;
 	},
 };

@@ -21,22 +21,12 @@ module.exports = {
         if (queue.starter.user.id != interaction.user.id)
 			throw new Error(`You have no right to do this!`);
 
-		if (queue.paused) {
-			queue.resume();
-			return interaction.reply({
-				embeds: [
-					new SuccessEmbed("Resumed the song!").setAuthor({
-						name: `${interaction.user.tag}`,
-						iconURL: `${interaction.user.displayAvatarURL()}`,
-					}),
-				],
-			});
-		}
-
 		queue.pause();
 
 		interaction.reply({
 			embeds: [new ErrorEmbed("Paused the song!")],
 		});
+
+        client.emit("updatePanel", interaction);
 	},
 };

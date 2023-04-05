@@ -25,6 +25,8 @@ module.exports = {
 		interaction.reply({
 			embeds: [new InfoEmbed(`Autoplay: ${autoplay ? "On" : "Off"}`)],
 		});
+
+        client.emit("updatePanel", interaction);
 	},
 	async server(queue) {
 		const autoplay = queue.toggleAutoplay();

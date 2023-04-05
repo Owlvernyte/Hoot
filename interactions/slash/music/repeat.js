@@ -40,5 +40,7 @@ module.exports = {
 		interaction.reply({
 			embeds: [new SuccessEmbed(`Set repeat mode to \`${mode}\``)],
 		});
+
+        client.emit("updatePanel", interaction);
 	},
 };

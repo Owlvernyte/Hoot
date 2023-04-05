@@ -20,7 +20,7 @@ module.exports = {
 
 		queue.setVolume(queue.volume + 10);
 
-		client.emit("updatePanel", interaction, queue);
+		client.emit("updatePanel", interaction);
 		return;
 	},
 };

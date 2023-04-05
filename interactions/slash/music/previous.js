@@ -2,6 +2,7 @@
 
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const SuccessEmbed = require("../../../constants/embeds/SuccessEmbed");
+const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
 
 module.exports = {
 	// The data needed to register slash commands to Discord.
@@ -26,16 +27,28 @@ module.exports = {
 		const queue = client.distube.getQueue(guild);
 
 		async function previous() {
-			const song = await queue.previous();
+			try {
+				const song = await queue.previous();
 
-			interaction.reply({
-				embeds: [
-					new SuccessEmbed(`Backed!`).addFields({
-						name: `Now Playing`,
-						value: `[\`${song.name}\`](${song.url})`,
-					}),
-				],
-			});
+				interaction.reply({
+					embeds: [
+						new SuccessEmbed(`Backed!`).addFields({
+							name: `Now Playing`,
+							value: `[\`${song.name}\`](${song.url})`,
+						}),
+					],
+				});
+                return;
+			} catch (e) {
+				await interaction.reply({
+					embeds: [
+						new ErrorEmbed(
+							e?.message || `There was an issue while executing that button!`
+						),
+					],
+					ephemeral: true,
+				});
+			}
 		}
 
 		if (force && interaction.user.id == queue.starter.user.id)
@@ -47,8 +60,8 @@ module.exports = {
 
 		if (queue.backVotes.has(interaction.user.id)) {
 			if (queue.starter.user.id == interaction.user.id) {
-				queue.backVotes.clear();
 				previous();
+                return;
 			} else throw new Error(`You have already voted!`);
 		}
 
@@ -67,7 +80,6 @@ module.exports = {
 				],
 			});
 		else if (queue.backVotes.size >= required) {
-			queue.backVotes.clear();
 			previous();
 		}
 	},

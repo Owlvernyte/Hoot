@@ -14,11 +14,11 @@ module.exports = {
 			interaction.message.id !== queue.panelId
 		)
 			throw new Error(`You don't own this panel!`);
-            
+
 		let mode = queue.repeatMode + 1;
 		if (mode >= 3) mode = 0;
 		queue.setRepeatMode(mode);
-		client.emit("updatePanel", interaction, queue);
+		client.emit("updatePanel", interaction);
 		return;
 	},
 };

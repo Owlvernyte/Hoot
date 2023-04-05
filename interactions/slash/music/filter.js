@@ -54,5 +54,7 @@ module.exports = {
 				).setTitle(`Current Queue Filter`),
 			],
 		});
+
+        client.emit("updatePanel", interaction);
 	},
 };

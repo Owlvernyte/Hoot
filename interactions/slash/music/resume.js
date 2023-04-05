@@ -22,5 +22,7 @@ module.exports = {
 		interaction.reply({
 			embeds: [new SuccessEmbed("Resumed the song!")],
 		});
+
+        client.emit("updatePanel", interaction);
 	},
 };

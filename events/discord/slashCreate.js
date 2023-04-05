@@ -41,13 +41,13 @@ module.exports = {
 		}
 
 		try {
-			await command.execute(interaction);
+			await command.execute(interaction)
 		} catch (err) {
 			console.error(
 				`guildId=${interaction.guildId}/channelId=${interaction.channelId}/userId=${interaction.user.id}/cmdName=${interaction.commandName}&cmdType=${interaction.commandType}`,
 				err
 			);
-			if (interaction.isRepliable() && !interaction.replied)
+			if (interaction.isRepliable() || !interaction.replied)
 				await interaction
 					.reply({
 						embeds: [

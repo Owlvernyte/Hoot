@@ -27,5 +27,7 @@ module.exports = {
 				new SuccessEmbed("Stopped the queue!"),
 			],
 		});
+
+        client.emit("updatePanel", interaction);
 	},
 };
