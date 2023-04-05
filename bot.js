@@ -300,38 +300,6 @@ const commandJsonData = [
 	}
 })();
 
-/**
- *
- * @param {import("distube").Queue} queue
- * @returns
- */
-const status = (queue) => {
-	const volumeIcon =
-		queue.volume > 75
-			? "🔊"
-			: queue.volume > 25
-			? "🔉"
-			: queue.volume > 0
-			? "🔈"
-			: "🔇";
-
-	const loopMode = queue.repeatMode
-		? queue.repeatMode === 2
-			? " | 🔁 Queue"
-			: " | 🔂 This song"
-		: "";
-
-	const filter = !queue.filters.names.length
-		? ""
-		: ` | Filter: ${queue.filters.names.join(", ")}`;
-
-	const autoplay = !!queue.autoplay ? ` | 🅰UTOPLAY` : "";
-
-	return `${volumeIcon} ${queue.volume}%${autoplay}${loopMode}${filter}`;
-};
-
-client.status = status;
-
 const distubeEventFiles = fs
 	.readdirSync("./events/distube")
 	.filter((file) => file.endsWith(".js"));
@@ -347,7 +315,7 @@ for (const file of distubeEventFiles) {
 	} else {
 		client.distube.on(
 			event.name,
-			async (...args) => await event.execute(...args, client, status)
+			async (...args) => await event.execute(...args, client)
 		);
 	}
 }

@@ -26,7 +26,7 @@ module.exports = {
 		});
 
 		queue.panelId = msg.id;
-		queue.skipVotes.clear()
-		queue.backVotes.clear()
+		queue.skipVotes.clear();
+		queue.backVotes.clear();
 	},
 };
