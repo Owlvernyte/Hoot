@@ -1,6 +1,3 @@
-// Deconstructed the constants we need in this file.
-
-const { ChannelType } = require("discord-api-types/v10");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
@@ -26,12 +23,6 @@ module.exports = {
 			option
 				.setName("skip")
 				.setDescription("Whether to skip the current song or not")
-		)
-		.addChannelOption((option) =>
-			option
-				.setName("destination")
-				.setDescription("Select a voice channel")
-				.addChannelTypes(ChannelType.GuildStageVoice, ChannelType.GuildVoice)
 		),
 	inVoiceChannel: true,
 	checkFocused: true,
@@ -42,9 +33,7 @@ module.exports = {
 		const songName = interaction.options.getString("song");
 		const skip = interaction.options.getBoolean("skip") || false;
 		let position = interaction.options.getInteger("position") || 0;
-		const voiceChannel =
-			interaction.options.getChannel("destination") ||
-			interaction.member.voice.channel;
+		const voiceChannel = interaction.member.voice.channel;
 
 		client.distube.play(voiceChannel, songName, {
 			member: interaction.member,
