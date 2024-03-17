@@ -1,5 +1,5 @@
-const { client } = require("../../bot");
-const auth = require("../middlewares/auth");
+const { client } = require("../../../bot");
+const auth = require("../../middlewares/auth");
 
 const router = require("express").Router();
 

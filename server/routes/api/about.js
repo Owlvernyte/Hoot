@@ -1,7 +1,7 @@
 const os = require('os')
-const packageJSON = require('../../package.json')
+const packageJSON = require('../../../package.json')
 const Discord = require('discord.js')
-const { client, distube } = require('../../bot')
+const { client, distube } = require('../../../bot')
 
 const router = require('express').Router()
 

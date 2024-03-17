@@ -1,5 +1,5 @@
 const numeral = require("numeral");
-const { client } = require("../../bot");
+const { client } = require("../../../bot");
 
 const router = require("express").Router();
 

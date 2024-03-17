@@ -1,5 +1,5 @@
-const { client, distube } = require('../../bot')
-const auth = require('../middlewares/auth')
+const { client, distube } = require('../../../bot')
+const auth = require('../../middlewares/auth')
 
 const router = require('express').Router()
 
@@ -87,13 +87,13 @@ router.post('/:guildId/:name', async (req, res, next) => {
 
         const result = command(queue)
 
-        const Embed = require('../../constants/embeds/playPanel')(
+        const Embed = require('../../../constants/embeds/playPanel')(
             queue.songs[0],
             queue,
             client
         )
 
-        const components = require('../../constants/components/playPanel')(
+        const components = require('../../../constants/components/playPanel')(
             false,
             queue,
             client

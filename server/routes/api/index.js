@@ -1,7 +1,5 @@
 const fs = require('fs')
 const path = require('path')
-const { getInviteLinks } = require('../../constants/inviteLinks')
-const { client } = require('../../bot')
 const router = require('express').Router()
 
 const Files = fs
@@ -15,9 +13,5 @@ for (const file of Files) {
     if (filePath === 'index') continue
     router.use(`/${filePath}`, route)
 }
-
-router.get('/', (req, res, next) => {
-    res.redirect(getInviteLinks(client).defaultInviteLink)
-})
 
 module.exports = router
