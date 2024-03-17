@@ -32,5 +32,6 @@
     },
     "topggToken": "",
     "dev": "on",
-    "port": 3000
+    "port": 3000,
+    "api_key": ""
 }

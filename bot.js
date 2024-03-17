@@ -71,7 +71,9 @@ for (const file of eventFiles) {
 // Define Collection of Commands, Slash Commands and cooldowns
 
 client.config = pjConfig;
-client.distube = new DisTube(client, {
+
+// Initialize Distube Client
+const distube = new DisTube(client, {
 	leaveOnStop: false,
 	// emitNewSongOnly: true,
 	// emitAddSongWhenCreatingQueue: false,
@@ -85,6 +87,8 @@ client.distube = new DisTube(client, {
 		new ExtractorPlugin(),
 	],
 });
+
+client.distube = distube
 // client.commands = new Collection();
 client.slashCommands = new Collection();
 client.buttonCommands = new Collection();
@@ -326,4 +330,4 @@ client.on("debug", console.log).on("warn", console.log);
 
 client.login(client.config.token);
 
-module.exports = { client };
+module.exports = { client, distube };

@@ -1,7 +1,10 @@
 const { Collection } = require("discord.js");
 const { client } = require("../../bot");
+const auth = require("../middlewares/auth");
 
 const router = require("express").Router();
+
+router.use(auth)
 
 router.get("/", async (req, res, next) => {
   try {
