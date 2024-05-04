@@ -1,7 +1,7 @@
 <br/>
 <p align="center">
   <a href="https://github.com/fiezt1492/Hoot">
-    <img src="https://cdn.discordapp.com/avatars/804616628359921684/037a1936c98ad47f7d14c07808e62d9e.webp" alt="Logo" width="80" height="80">
+    <img src="assets/Hoot_with_Bard.jpg" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Hoot</h3>
@@ -33,15 +33,13 @@
 
 ### Installation
 
-| <div style="text-align: center;"> [<img src="https://cdn.discordapp.com/attachments/699540846621753404/994199071784972438/logo-white-3.png" width="100px"/>](https://top.gg/bot/804616628359921684) </div>  | <div style="text-align: center;"> [<img src="https://cdn.discordapp.com/attachments/699540846621753404/994198076598259812/Discord-LogoWordmark-Color.png" width="100px"/> </div>](https://discord.com/api/oauth2/authorize?client_id=804616628359921684&permissions=532977937745&scope=bot%20applications.commands)  | [<div style="text-align: center;"> <img src="https://cdn.discordapp.com/attachments/699540846621753404/994198076598259812/Discord-LogoWordmark-Color.png" width="100px"/> </div>](https://discord.com/api/oauth2/authorize?client_id=804616628359921684&permissions=8&scope=bot%20applications.commands)  |
-|--------- |----- |----- |
-| <div style="text-align: center;"> [Top.gg](https://top.gg/bot/804616628359921684)   </div>  | <div style="text-align: center;"> [OAuth2 (Restricted)](https://discord.com/api/oauth2/authorize?client_id=804616628359921684&permissions=532977937745&scope=bot%20applications.commands) </div> | <div style="text-align: center;"> [OAuth2 (Unrestricted)](https://discord.com/api/oauth2/authorize?client_id=804616628359921684&permissions=8&scope=bot%20applications.commands) </div> |
+[Discord Provided Link](https://discord.com/oauth2/authorize?client_id=804616628359921684)
 
 ## Usage
 
-It doesn't use normal prefix, use Slash Command instead. /play [song name] to start queueing your favorite song!
+It doesn't use normal prefix, use Slash Command instead. `/play [song name]` to start queueing your favorite song!
 
-_For more examples, please refer to the [Documentation](https://owlvernyte.tk)_
+> There is no official document to use this bot instead of using a slash command to show a full list of commands: `/help`
 
 ## Self Host
 
@@ -91,10 +89,10 @@ Run the bot with [PM2](https://pm2.keymetrics.io): `pm2 start ecosystem.config.j
 
 Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-* If you have suggestions for adding or removing projects, feel free to [open an issue](https://github.com/fiezt1492/Hoot/issues/new) to discuss it, or directly create a pull request after you edit the _README.md_ file with necessary changes.
+* If you have suggestions for adding or removing projects, feel free to [open an issue](https://github.com/Owlvernyte/Hoot/issues/new) to discuss it, or directly create a pull request after you edit the _README.md_ file with necessary changes.
 * Please make sure you check your spelling and grammar.
 * Create individual PR for each suggestion.
-* Please also read through the [Code Of Conduct](https://github.com/fiezt1492/Hoot/blob/main/CODE_OF_CONDUCT.md) before posting your first idea as well.
+* Please also read through the [Code Of Conduct](https://github.com/Owlvernyte/Hoot/blob/main/CODE_OF_CONDUCT.md) before posting your first idea as well.
 
 ### Creating A Pull Request
 
@@ -106,7 +104,7 @@ Contributions are what make the open source community such an amazing place to b
 
 ## License
 
-Distributed under the MIT License. See [LICENSE](https://github.com/fiezt1492/Hoot/blob/main/LICENSE.md) for more information.
+Distributed under the MIT License. See [LICENSE](https://github.com/Owlvernyte/Hoot/blob/main/LICENSE.md) for more information.
 
 ## Authors
 
@@ -114,4 +112,6 @@ Distributed under the MIT License. See [LICENSE](https://github.com/fiezt1492/Ho
 
 ## Acknowledgements
 
+* [Terms of Service](https://github.com/Owlvernyte/Hoot/blob/main/TERMS_OF_SERVICE.md)
+* [Privacy Policy](https://github.com/Owlvernyte/Hoot/blob/main/PRIVACY_POLICY.md)
 * [NamVr Discord Bot Template](https://github.com/NamVr/DiscordBot-Template)
