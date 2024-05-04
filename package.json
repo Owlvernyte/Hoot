@@ -49,5 +49,8 @@
 	},
 	"devDependencies": {
 		"nodemon": "^2.0.19"
+	},
+	"volta": {
+		"node": "18.20.2"
 	}
 }

@@ -49,6 +49,7 @@ jspm_packages/
 yarn.lock
 package-lock.json
 pnpm-lock.yaml
+bun.lockb
 
 # TypeScript v1 declaration files
 typings/
