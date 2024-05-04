@@ -1,5 +1,13 @@
 const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
 
+/**
+ * Returns an array of ActionRowBuilder objects that contain the buttons for the playback controls.
+ *
+ * @param {boolean} state - The state of the buttons.
+ * @param {import("distube").Queue} queue - The queue object from the distube library.
+ * @param {import("discord.js").Client} client - The Discord client object.
+ * @return {import("discord.js").ActionRowData<import("discord.js").ButtonBuilder>[]} An array of ActionRowBuilder objects that contain the buttons for the playback controls.
+ */
 module.exports = (state, queue, client) => [
 	new ActionRowBuilder().addComponents(
 		new ButtonBuilder()

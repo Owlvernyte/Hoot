@@ -2,9 +2,9 @@ const { ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
 
 /**
  *
- * @param {boolean} state
- * @param {import("distube").Song[]} songs
- * @param {string} name
+ * @param {boolean} state - The state of the button.
+ * @param {import("distube").Song[]} songs - The songs in the queue.
+ * @param {string} name - The name of the playlist.
  * @returns
  */
 module.exports = (state, songs, name) =>

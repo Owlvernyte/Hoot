@@ -37,9 +37,12 @@ const normalPermissions = [
     PermissionFlagsBits.ViewChannel,
 ]
 
+
 /**
+ * Generates invite links for a Discord bot with different permissions.
  *
- * @param {import("discord.js").Client} client
+ * @param {import('discord.js').Client} client - The Discord.js client instance.
+ * @return {Object} An object containing the default and admin invite links.
  */
 function getInviteLinks(client) {
     const defaultInviteLink = client.generateInvite({

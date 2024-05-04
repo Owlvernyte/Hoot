@@ -4,6 +4,10 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 const SuccessEmbed = require("../../../constants/embeds/SuccessEmbed");
 const { use_database } = require("../../../config.json");
 const ErrorEmbed = require("../../../constants/embeds/ErrorEmbed");
+const { playlistCreate } = require("../../../modules/playlist/playlistCreate");
+const { playlistManage } = require("../../../modules/playlist/playlistManage");
+const { playlistPlay } = require("../../../modules/playlist/playlistPlay");
+const { playlistDelete } = require("../../../modules/playlist/playlistDelete");
 
 module.exports = {
 	// The data needed to register slash commands to Discord.
@@ -73,16 +77,16 @@ module.exports = {
 		try {
 			switch (subcommand) {
 				case "create":
-					playlistCreate(interaction, name);
+					await playlistCreate(interaction, name);
 					break;
 				case "manage":
-					playlistManage(interaction, name);
+					await playlistManage(interaction, name);
 					break;
 				case "play":
-					playlistPlay(interaction, name);
+					await playlistPlay(interaction, name);
 					break;
 				case "delete":
-					playlistDelete(interaction, name);
+					await playlistDelete(interaction, name);
 					break;
 			}
 		} catch (error) {
@@ -91,8 +95,6 @@ module.exports = {
 			});
 			console.error(error);
 		}
-
-		// console.log(client.db);
 	},
 	async autocomplete(interaction) {
 		const { client } = interaction;
@@ -118,165 +120,3 @@ module.exports = {
 		);
 	},
 };
-
-async function playlistCreate(interaction, name) {
-	const { client } = interaction;
-
-	// if (name === "Favorite")
-	// 	return interaction.editReply({
-	// 		content: `${client.emotes.error} | Uh oh! You should not create this playlist due to it is default playlist!`,
-	// 	});
-
-	const count = await client.db.models.Playlists.count({
-		where: { playlistOwnerId: interaction.user.id },
-	});
-
-	if (count > 10)
-		return interaction.editReply({
-			embeds: [
-				new ErrorEmbed(
-					`You have reached maximum playlists (\`10\`). Delete some before create a new one!`
-				),
-			],
-		});
-
-	const [playlist, created] = await client.db.models.Playlists.findOrCreate({
-		where: {
-			playlistOwnerId: interaction.user.id,
-			playlistId: `${name}`,
-		},
-		defaults: {
-			playlistOwnerId: interaction.user.id,
-			playlistId: `${name}`,
-		},
-	});
-
-	if (!created)
-		return interaction.editReply({
-			embeds: [new ErrorEmbed(`You already have that playlist!`)],
-		});
-
-	interaction.editReply({
-		embeds: [
-			new SuccessEmbed(`Created **${playlist.dataValues.playlistId}**!`),
-		],
-	});
-}
-
-async function playlistManage(interaction, name) {
-	const { client } = interaction;
-
-	const exist = await client.db.models.Playlists.findOne({
-		where: {
-			playlistOwnerId: interaction.user.id,
-			playlistId: `${name}`,
-		},
-	});
-
-	if (exist === null)
-		return interaction.editReply({
-			embeds: [new ErrorEmbed(`That playlist doesn't exist!`)],
-		});
-
-	const managePanel = require("../../../constants/embeds/playlistManage");
-
-	const components = require("../../../constants/components/playlistManage");
-
-	await interaction.editReply({
-		embeds: managePanel(
-			exist.dataValues.data.songs,
-			exist.dataValues.playlistId
-		),
-		components: [
-			components(
-				false,
-				exist.dataValues.data.songs,
-				exist.dataValues.playlistId
-			),
-		],
-		ephemeral: true,
-	});
-}
-
-async function playlistPlay(interaction, name) {
-	const { client } = interaction;
-
-	if (!interaction.member.voice.channel) {
-		return interaction.reply({
-			embeds: [new ErrorEmbed(`You must be in a voice channel!`)],
-			ephemeral: true,
-		});
-	}
-
-	const exist = await client.db.models.Playlists.findOne({
-		where: {
-			playlistOwnerId: interaction.user.id,
-			playlistId: `${name}`,
-		},
-	});
-
-	if (exist === null)
-		return interaction.editReply({
-			embeds: [new ErrorEmbed(`That playlist doesn't exist!`)],
-		});
-
-	if (!exist.dataValues.data.songs.length)
-		return interaction.editReply({
-			embeds: [new ErrorEmbed(`This playlist is empty! Add some songs!`)],
-		});
-
-	const playlist = await client.distube.createCustomPlaylist(
-		exist.dataValues.data.songs,
-		{
-			member: interaction.member,
-			properties: { name: `${exist.dataValues.playlistId}` },
-			parallel: true,
-		}
-	);
-
-	client.distube.play(interaction.member.voice.channel, playlist, {
-		member: interaction.member,
-		textChannel: interaction.channel,
-		metadata: {
-			i: interaction,
-		},
-	});
-}
-
-async function playlistDelete(interaction, name) {
-	const { client } = interaction;
-
-	// if (name === "Favorite")
-	// 	return interaction.editReply({
-	// 		content: `${client.emotes.error} | That playlist is a default playlist! You cannot delete that!`,
-	// 	});
-
-	const exist = await client.db.models.Playlists.findOne({
-		where: {
-			playlistOwnerId: interaction.user.id,
-			playlistId: `${name}`,
-		},
-	});
-
-	if (exist === null)
-		return interaction.editReply({
-			embeds: [new ErrorEmbed(`That playlist doesn't exist!`)],
-		});
-
-	const deleted = await client.db.models.Playlists.destroy({
-		where: {
-			playlistOwnerId: interaction.user.id,
-			playlistId: `${name}`,
-		},
-	});
-
-	if (deleted > 0) {
-		interaction.editReply({
-			embeds: [new SuccessEmbed(`Deleted!`)],
-		});
-	} else {
-		interaction.editReply({
-			embeds: [new ErrorEmbed(`Failed to delete`)],
-		});
-	}
-}

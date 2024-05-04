@@ -4,7 +4,7 @@ module.exports = {
 	name: "addSong",
 	async execute(queue, song, client) {
 		if (queue.songs.length - 1 > client.maxSongs) {
-			queue.songs.splice(client.maxSongs + 1).length;
+			queue.songs.splice(client.maxSongs + 1);
 			return queue.textChannel.send({
 				embeds: [
 					new EmbedBuilder()

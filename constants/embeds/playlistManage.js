@@ -3,8 +3,8 @@ const { EmbedBuilder } = require("discord.js");
 
 /**
  *
- * @param {import("distube").Song[]} songs
- * @param {string} name
+ * @param {import("distube").Song[]} songs - The songs in the queue.
+ * @param {string} name - The name of the playlist.
  * @returns
  */
 module.exports = (songs, name) => [
