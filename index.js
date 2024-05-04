@@ -8,15 +8,25 @@
 // 	.spawn()
 // 	.catch((error) => console.error(`[ERROR/SHARD] Shard failed to spawn.`));
 
-const { modules } = require('./config.json')
+const { modules } = require("./config.json");
 
 function bootstrap() {
-    try {
-        require('./bot')
-        modules.use_server === 'yes' ? require('./server') : null
-    } catch (error) {
-        console.error(`[${new Date().toLocaleString()}]`, error)
-    }
+	try {
+		require("./bot");
+		if (modules.use_server === "yes") {
+			require("./server");
+		}
+	} catch (error) {
+		if (!error || !error.stack) {
+			console.error(
+				`[${new Date().toLocaleString()}]`,
+				"Unhandled exception:",
+				error
+			);
+		} else {
+			console.error(`[${new Date().toLocaleString()}]`, error.stack);
+		}
+	}
 }
 
-bootstrap()
+bootstrap();

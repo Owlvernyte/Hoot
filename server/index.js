@@ -12,6 +12,8 @@ app.use("/api", apiRoutes);
 app.use("/", routes);
 
 app.listen(PORT, (err) => {
-  if (err) return console.log(`[SERVER] ${err.message}`);
-  console.log(`[SERVER] Listening on port ${PORT}`);
+	if (err) return console.log(`[SERVER] ${err.message}`);
+	console.log(`[SERVER] Listening on port ${PORT}`);
 });
+
+module.exports = { app };
