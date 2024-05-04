@@ -92,7 +92,7 @@ Contributions are what make the open source community such an amazing place to b
 * If you have suggestions for adding or removing projects, feel free to [open an issue](https://github.com/Owlvernyte/Hoot/issues/new) to discuss it, or directly create a pull request after you edit the _README.md_ file with necessary changes.
 * Please make sure you check your spelling and grammar.
 * Create individual PR for each suggestion.
-* Please also read through the [Code Of Conduct](https://github.com/Owlvernyte/Hoot/blob/main/CODE_OF_CONDUCT.md) before posting your first idea as well.
+* Please also read through the [Code Of Conduct](https://github.com/Owlvernyte/Hoot/blob/master/CODE_OF_CONDUCT.md) before posting your first idea as well.
 
 ### Creating A Pull Request
 
@@ -104,7 +104,7 @@ Contributions are what make the open source community such an amazing place to b
 
 ## License
 
-Distributed under the MIT License. See [LICENSE](https://github.com/Owlvernyte/Hoot/blob/main/LICENSE.md) for more information.
+Distributed under the MIT License. See [LICENSE](https://github.com/Owlvernyte/Hoot/blob/master/LICENSE.md) for more information.
 
 ## Authors
 
@@ -112,6 +112,6 @@ Distributed under the MIT License. See [LICENSE](https://github.com/Owlvernyte/H
 
 ## Acknowledgements
 
-* [Terms of Service](https://github.com/Owlvernyte/Hoot/blob/main/TERMS_OF_SERVICE.md)
-* [Privacy Policy](https://github.com/Owlvernyte/Hoot/blob/main/PRIVACY_POLICY.md)
+* [Terms of Service](https://github.com/Owlvernyte/Hoot/blob/master/TERMS_OF_SERVICE.md)
+* [Privacy Policy](https://github.com/Owlvernyte/Hoot/blob/master/PRIVACY_POLICY.md)
 * [NamVr Discord Bot Template](https://github.com/NamVr/DiscordBot-Template)
