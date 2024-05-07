@@ -4,7 +4,7 @@ import { CustomEvents } from '../../lib/constants';
 import { SuccessEmbed } from '../../messages';
 
 @ApplyOptions<Command.Options>({
-	description: 'Seek to a position of song',
+	description: 'Adjust the queue volume',
 	preconditions: ['InVoice', 'InQueue']
 })
 export class UserCommand extends Command {
@@ -14,7 +14,7 @@ export class UserCommand extends Command {
 				.setName(this.name)
 				.setDescription(this.description)
 				.addIntegerOption((option) =>
-					option.setName('amount').setDescription('Position in seconds').setMinValue(0).setMaxValue(100).setRequired(true)
+					option.setName('amount').setDescription('Volume amount').setMinValue(0).setMaxValue(100).setRequired(true)
 				)
 		);
 	}
