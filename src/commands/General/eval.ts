@@ -12,7 +12,8 @@ import { inspect } from 'util';
 	quotes: [],
 	preconditions: ['OwnerOnly'],
 	flags: ['async', 'hidden', 'showHidden', 'silent', 's'],
-	options: ['depth']
+	options: ['depth'],
+	enabled: false,
 })
 export class UserCommand extends Command {
 	public override async messageRun(message: Message, args: Args) {

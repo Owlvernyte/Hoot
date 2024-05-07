@@ -5,6 +5,7 @@ import { EmbedBuilder, PermissionFlagsBits, type Message } from 'discord.js';
 
 @ApplyOptions<Subcommand.Options>({
 	aliases: ['cwd'],
+	enabled: false,
 	description: 'A basic command with some subcommands',
 	subcommands: [
 		{

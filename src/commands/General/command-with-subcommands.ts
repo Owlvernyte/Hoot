@@ -6,6 +6,7 @@ import type { Message } from 'discord.js';
 @ApplyOptions<Subcommand.Options>({
 	aliases: ['cws'],
 	description: 'A basic command with some subcommands',
+	enabled: false,
 	subcommands: [
 		{
 			name: 'add',

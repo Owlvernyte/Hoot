@@ -7,6 +7,7 @@ import { sendLoadingMessage } from '../../lib/utils';
 
 @ApplyOptions<Command.Options>({
 	aliases: ['pm'],
+	enabled: false,
 	description: 'A command that uses paginated messages.',
 	generateDashLessAliases: true
 })
