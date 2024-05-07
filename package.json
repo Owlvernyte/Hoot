@@ -25,6 +25,7 @@
         "discord.js": "^14.14.1",
         "distube": "^4.2.2",
         "lodash": "^4.17.21",
+        "millify": "^6.1.0",
         "sodium-native": "^4.1.1"
     },
     "devDependencies": {

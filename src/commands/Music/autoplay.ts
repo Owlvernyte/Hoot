@@ -27,10 +27,10 @@ export class UserCommand extends Command {
 
 		const autoplay = queue.toggleAutoplay();
 
-		interaction.reply({
+		this.container.client.emit(CustomEvents.UpdatePanel, interaction);
+
+		return interaction.reply({
 			embeds: [new SuccessEmbed(`Autoplay is now ${autoplay ? 'enabled' : 'disabled'}!`)]
 		});
-
-		this.container.client.emit(CustomEvents.UpdatePanel, interaction);
 	}
 }

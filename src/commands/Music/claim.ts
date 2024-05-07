@@ -38,10 +38,10 @@ export class UserCommand extends Command {
 
 		queue.owner = member;
 
-		interaction.reply({
+		this.container.client.emit(CustomEvents.UpdatePanel, interaction);
+
+		return interaction.reply({
 			embeds: [new SuccessEmbed(`You are now the owner of the queue!`)]
 		});
-
-		this.container.client.emit(CustomEvents.UpdatePanel, interaction);
 	}
 }
