@@ -1,10 +1,12 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import { Command } from '@sapphire/framework';
-import { AutocompleteInteraction, GuildMember } from 'discord.js';
+import { AutocompleteInteraction } from 'discord.js';
+import { QueueMetadata } from '../../lib/HootClient';
 
 @ApplyOptions<Command.Options>({
 	description: 'Play a song',
-	preconditions: ['GuildOnly']
+	preconditions: ['GuildOnly', 'InVoice'],
+	runIn: 'GUILD_ANY'
 })
 export class UserCommand extends Command {
 	public override registerApplicationCommands(registry: Command.Registry) {
@@ -21,7 +23,8 @@ export class UserCommand extends Command {
 	}
 
 	public override async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
-		const member = interaction.member as GuildMember | undefined;
+		const member = await interaction.guild?.members.fetch(interaction.user.id);
+
 		if (!member) {
 			throw new Error('Member should not be null');
 		}
@@ -34,13 +37,14 @@ export class UserCommand extends Command {
 			i: interaction
 		};
 
-		const voiceChannel = !member.voice.channel?.isDMBased() && !member.voice.channel?.isTextBased() ? member.voice.channel : null;
+		const voiceChannel = await interaction.guild?.channels.fetch(member.voice.channelId!);
 		const textChannel = interaction.channel?.isTextBased() && !interaction.channel.isDMBased() ? interaction.channel : null;
 
 		if (!voiceChannel || !textChannel) {
 			throw new Error('Voice channel or text channel should not be null');
 		}
 
+		// @ts-ignore
 		this.container.distube.play(voiceChannel, songName, {
 			member,
 			textChannel,
@@ -61,6 +65,7 @@ export class UserCommand extends Command {
 			}))
 		);
 	}
+
 }
 
 declare module '@sapphire/pieces' {

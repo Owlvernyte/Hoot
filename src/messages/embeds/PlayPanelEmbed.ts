@@ -3,7 +3,7 @@ import { Song } from 'distube';
 import { HootQueue } from '../../lib/distube/HootQueue';
 import { getQueueStatus } from '../../lib/utils';
 
-export default class PlayPanelEmbed {
+export class PlayPanelEmbed {
 	static create(song: Song, queue: HootQueue) {
 		const { autoplay, filter, loop, volume } = getQueueStatus(queue);
 		const firstLine = [`⌛ **${song.formattedDuration}**`, volume, loop, filter].filter((x) => !!x.length).join(' | ');

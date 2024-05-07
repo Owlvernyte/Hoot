@@ -6,7 +6,7 @@ export class HootQueue extends Queue {
 	owner?: GuildMember;
 	skipVotes: Collection<Snowflake, GuildMember | User>;
 	backVotes: Collection<Snowflake, GuildMember | User>;
-    panelId?: Snowflake;
+	panelId?: Snowflake;
 
 	constructor(distube: DisTube, voice: DisTubeVoice, song: Song | Song[], textChannel?: GuildTextBasedChannel | undefined) {
 		super(distube, voice, song, textChannel);

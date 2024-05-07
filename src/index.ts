@@ -1,5 +1,5 @@
 import './lib/setup';
-import { HootClient } from './lib/HootClient'
+import { HootClient } from './lib/HootClient';
 import { LogLevel } from '@sapphire/framework';
 import { GatewayIntentBits, Partials } from 'discord.js';
 
@@ -24,7 +24,10 @@ const client = new HootClient({
 		GatewayIntentBits.MessageContent
 	],
 	partials: [Partials.Channel],
-	loadMessageCommandListeners: true
+	loadMessageCommandListeners: true,
+	api: {
+		automaticallyConnect: false
+	}
 });
 
 const main = async () => {

@@ -1,11 +1,18 @@
-import { Song } from 'distube';
+import { Listener } from '@sapphire/framework';
+import { Events, Song } from 'distube';
 import { HootQueue } from '../../lib/distube/HootQueue';
-import { BaseDisTubeListener } from './baseDisTubeListener';
-import PlayPanelEmbed from '../../messages/embeds/PlayPanelEmbed';
 import { PlayPanelComponents } from '../../messages/components/PlayPanelComponents';
+import { PlayPanelEmbed } from '../../messages/embeds/PlayPanelEmbed';
+import { ApplyOptions } from '@sapphire/decorators';
 
-export class PlaySongListener extends BaseDisTubeListener<'playSong'> {
+@ApplyOptions<Listener.Options>(({ container }) => ({
+	emitter: container.distube,
+	event: Events.PLAY_SONG
+}))
+export class PlaySongListener extends Listener {
 	async run(queue: HootQueue, song: Song) {
+		// this.container.logger.debug('PlaySongListener', queue);
+
 		const embeds = [PlayPanelEmbed.create(song, queue)];
 
 		const components = PlayPanelComponents.create(false, queue);
