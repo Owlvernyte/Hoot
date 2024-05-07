@@ -34,15 +34,3 @@ export class ButtonHandler extends InteractionHandler {
 		return this.some();
 	}
 }
-
-declare module '@sapphire/pieces' {
-	interface Container {
-		distube: import('distube').DisTube;
-	}
-}
-
-declare module 'distube' {
-	interface DisTube {
-		getQueue(guildId: import('discord.js').Snowflake): import('../../lib/distube/HootQueue').HootQueue | undefined;
-	}
-}

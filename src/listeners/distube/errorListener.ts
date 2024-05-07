@@ -8,11 +8,11 @@ import { Events } from 'distube';
 	event: Events.ERROR
 }))
 export class UserEvent extends Listener {
-	public override run(channel: Channel, e) {
+	public override run(channel: Channel, e: unknown) {
 		const embed = new EmbedBuilder()
 			.setColor('Red')
 			.setTitle(`ERROR`)
-			.setDescription(`An error encountered: \`\`\`${e.toString().slice(0, 1974)}\`\`\``);
+			.setDescription(`An error encountered: \`\`\`${(e as Error).toString().slice(0, 1974)}\`\`\``);
 
 		if (channel && channel.isTextBased())
 			channel.send({

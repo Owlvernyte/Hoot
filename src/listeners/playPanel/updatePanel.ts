@@ -41,9 +41,3 @@ export class UpdatePanelEvent extends Listener {
 		}
 	}
 }
-
-declare module 'distube' {
-	interface DisTube {
-		getQueue(guildId: import('discord.js').Snowflake): import('../../lib/distube/HootQueue').HootQueue | undefined;
-	}
-}

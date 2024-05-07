@@ -67,9 +67,3 @@ export class UserCommand extends Command {
 	}
 
 }
-
-declare module '@sapphire/pieces' {
-	interface Container {
-		distube: import('distube').DisTube;
-	}
-}

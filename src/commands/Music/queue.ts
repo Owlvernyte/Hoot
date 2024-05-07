@@ -7,7 +7,7 @@ import { PaginatedMessage } from '@sapphire/discord.js-utilities';
 
 @ApplyOptions<Command.Options>({
 	description: 'Show music queue',
-	preconditions: ['InVoice']
+	preconditions: ['InQueue']
 })
 export class UserCommand extends Command {
 	public override registerApplicationCommands(registry: Command.Registry) {
@@ -33,7 +33,7 @@ export class UserCommand extends Command {
 
 		const songs = [...queue.songs];
 
-		const np = songs.shift();
+		const np = songs.shift()!;
 
 		const q = songs.map((song, i) => `${`\`${i + 1}\`. [${song.name}](${song.url}) - \`${song.formattedDuration}\``}`);
 
@@ -47,17 +47,26 @@ export class UserCommand extends Command {
 				.setFooter({ text: ` ${queue.owner?.user.tag} 💂‍♂️`, iconURL: `${queue.owner?.user.displayAvatarURL()}` })
 		});
 
-		splittedSongs.forEach((c) => {
+		if (splittedSongs.length <= 0) {
 			paginatedMessage.addPageEmbed((embed) =>
 				embed
-					.setTitle(`${totalSongs} songs in queue`)
-					.addFields({
-						name: `Now Playing`,
-						value: `**[${np?.name}](${np?.url}) - \`${np?.formattedDuration}\`**`
-					})
-					.setDescription(`${c.reverse().join('\n')}`)
+					.setTitle(`Now Playing`)
+					.setDescription(`**[${np.name}](${np.url}) - \`${np.formattedDuration}\`**`)
+					.setThumbnail(np.thumbnail || null)
 			);
-		});
+		} else {
+			splittedSongs.forEach((c) => {
+				paginatedMessage.addPageEmbed((embed) =>
+					embed
+						.setTitle(`${totalSongs} songs in queue`)
+						.addFields({
+							name: `Now Playing`,
+							value: `**[${np.name}](${np.url}) - \`${np.formattedDuration}\`**`
+						})
+						.setDescription(`${c.reverse().join('\n')}`)
+				);
+			});
+		}
 
 		await paginatedMessage.run(response, interaction.user);
 		return response;

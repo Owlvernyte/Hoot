@@ -27,6 +27,12 @@ declare module '@sapphire/pieces' {
 	}
 }
 
+declare module 'distube' {
+	interface DisTube {
+		getQueue(guildId: import('discord.js').Snowflake): import('./distube/HootQueue').HootQueue | undefined;
+	}
+}
+
 export type QueueMetadata = {
     queueStarter?: import('discord.js').GuildMember | import('discord.js').User;
     i?: import('discord.js').Interaction
