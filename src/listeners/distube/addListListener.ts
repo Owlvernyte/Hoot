@@ -1,10 +1,11 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import { Listener } from '@sapphire/framework';
+import { AutocompleteInteraction } from 'discord.js';
 import { Events, Playlist } from 'distube';
+import { maxSongs } from '../../lib/constants';
 import { HootQueue } from '../../lib/distube/HootQueue';
 import { QueueMetadata } from '../../lib/HootClient';
-import { maxSongs } from '../../lib/constants';
-import { AutocompleteInteraction, EmbedBuilder } from 'discord.js';
+import { ErrorEmbed, SuccessEmbed } from '../../messages';
 
 @ApplyOptions<Listener.Options>(({ container }) => ({
 	emitter: container.distube,
@@ -18,31 +19,23 @@ export class UserEvent extends Listener {
 			const exceptLength = queue.songs.splice(maxSongs + 1).length;
 			queue.textChannel?.send({
 				embeds: [
-					new EmbedBuilder()
-						.setColor('Red')
-						.setDescription(
-							`Your queue length meets limitation (\`${maxSongs}\`), some of your songs (\`${exceptLength}\` songs) were removed.`
-						)
+					new ErrorEmbed(
+						`Your queue length meets limitation (\`${maxSongs}\`), some of your songs (\`${exceptLength}\` songs) were removed.`
+					)
 				]
 			});
 			playlistLength -= exceptLength;
 		}
 
-		const embed = new EmbedBuilder()
-			.setColor('Random')
-			.setDescription(
-				`Added [\`${playlist.name}\`](${playlist.url}) playlist (\`${playlistLength}\` songs) to queue for total \`${
-					queue.songs.length - 1
-				}\` songs in queue`
-			);
-		// .setAuthor({
-		// 	name: `${playlist.user.tag}`,
-		// 	iconURL: `${playlist.user.displayAvatarURL()}`,
-		// });
-
 		if (playlist.metadata.i && !(playlist.metadata.i instanceof AutocompleteInteraction)) {
 			await playlist.metadata.i.editReply({
-				embeds: [embed]
+				embeds: [
+					new SuccessEmbed(
+						`Added [\`${playlist.name}\`](${playlist.url}) playlist (\`${playlistLength}\` songs) to queue for total \`${
+							queue.songs.length - 1
+						}\` songs in queue`
+					)
+				]
 			});
 		}
 	}

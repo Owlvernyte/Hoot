@@ -1,8 +1,8 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import { Listener } from '@sapphire/framework';
-import { EmbedBuilder } from 'discord.js';
 import { Events } from 'distube';
 import { HootQueue } from '../../lib/distube/HootQueue';
+import { ErrorEmbed } from '../../messages';
 
 @ApplyOptions<Listener.Options>(({ container }) => ({
 	emitter: container.distube,
@@ -10,7 +10,7 @@ import { HootQueue } from '../../lib/distube/HootQueue';
 }))
 export class UserEvent extends Listener {
 	public override async run(queue: HootQueue) {
-		const embed = new EmbedBuilder().setColor('Red').setDescription('This is the end of queue. Add more with `play` command.');
+		const embed = new ErrorEmbed('This is the end of queue. Add more with `play` command.', true);
 
 		try {
 			if (!queue.panelId) throw new Error('No queue panelId');

@@ -1,9 +1,9 @@
+import { ApplyOptions } from '@sapphire/decorators';
 import { Listener } from '@sapphire/framework';
 import { Events, Song } from 'distube';
 import { HootQueue } from '../../lib/distube/HootQueue';
 import { PlayPanelComponents } from '../../messages/components/PlayPanelComponents';
 import { PlayPanelEmbed } from '../../messages/embeds/PlayPanelEmbed';
-import { ApplyOptions } from '@sapphire/decorators';
 
 @ApplyOptions<Listener.Options>(({ container }) => ({
 	emitter: container.distube,

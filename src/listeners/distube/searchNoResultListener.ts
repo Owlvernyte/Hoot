@@ -1,7 +1,8 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import { Listener } from '@sapphire/framework';
-import { EmbedBuilder, Message } from 'discord.js';
+import { Message } from 'discord.js';
 import { Events } from 'distube';
+import { ErrorEmbed } from '../../messages';
 
 @ApplyOptions<Listener.Options>(({ container }) => ({
 	emitter: container.distube,
@@ -9,7 +10,7 @@ import { Events } from 'distube';
 }))
 export class UserEvent extends Listener {
 	public override run(message: Message, query: string) {
-		const embed = new EmbedBuilder().setColor('Red').setTitle(`ERROR`).setDescription(`No result found for \`${query}\`!`);
+		const embed = new ErrorEmbed(`No result found for \`${query}\`!`);
 
 		message.channel.send({
 			embeds: [embed]

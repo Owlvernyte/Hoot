@@ -1,7 +1,8 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import { Listener } from '@sapphire/framework';
-import { Channel, EmbedBuilder } from 'discord.js';
+import { Channel } from 'discord.js';
 import { Events } from 'distube';
+import { ErrorEmbed } from '../../messages';
 
 @ApplyOptions<Listener.Options>(({ container }) => ({
 	emitter: container.distube,
@@ -9,10 +10,7 @@ import { Events } from 'distube';
 }))
 export class UserEvent extends Listener {
 	public override run(channel: Channel, e: unknown) {
-		const embed = new EmbedBuilder()
-			.setColor('Red')
-			.setTitle(`ERROR`)
-			.setDescription(`An error encountered: \`\`\`${(e as Error).toString().slice(0, 1974)}\`\`\``);
+		const embed = new ErrorEmbed(`An error encountered: \`\`\`${(e as Error).toString().slice(0, 1974)}\`\`\``);
 
 		if (channel && channel.isTextBased())
 			channel.send({

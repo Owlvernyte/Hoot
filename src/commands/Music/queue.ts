@@ -21,9 +21,7 @@ export class UserCommand extends Command {
 	public override async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
 		const { guild } = interaction;
 
-		if (!guild) {
-			throw new Error('Guild should not be null');
-		}
+		if (!guild) throw new Error('Guild should not be null');
 
 		const queue = this.container.distube.getQueue(guild.id);
 
