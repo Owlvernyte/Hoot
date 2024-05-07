@@ -4,7 +4,7 @@ import { CustomEvents } from '../../lib/constants';
 import { SuccessEmbed } from '../../messages';
 
 @ApplyOptions<Command.Options>({
-	description: 'A basic slash command',
+	description: "Toggle autoplay mode",
 	preconditions: ['InVoice', 'InQueueWithOwner']
 })
 export class UserCommand extends Command {
