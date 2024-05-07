@@ -54,16 +54,4 @@ export class UserCommand extends Command {
 			metadata
 		});
 	}
-
-	public override async autocompleteRun(interaction: AutocompleteInteraction) {
-		const focusedValue = interaction.options.getFocused();
-		const searchResults = (await this.container.distube.search(focusedValue).catch(() => [])) || [];
-
-		await interaction.respond(
-			searchResults.map((result) => ({
-				name: `${result.name}`,
-				value: `${result.url}`
-			}))
-		);
-	}
 }
