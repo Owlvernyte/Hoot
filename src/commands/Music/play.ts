@@ -1,6 +1,5 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import { Command } from '@sapphire/framework';
-import { AutocompleteInteraction } from 'discord.js';
 import { QueueMetadata } from '../../lib/HootClient';
 import { HootBaseError } from '../../lib/errors/HootBaseError';
 
