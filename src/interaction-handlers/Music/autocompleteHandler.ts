@@ -15,9 +15,11 @@ export class AutocompleteHandler extends InteractionHandler {
 		if (interaction.commandName !== 'play') return this.none();
 		// Get the focussed (current) option
 		const focusedOption = interaction.options.getFocused(true);
+
 		// Ensure that the option name is one that can be autocompleted, or return none if not.
 		switch (focusedOption.name) {
 			case 'song': {
+				if (!focusedOption.value) return this.some([]);
 				// Search for song!
 				const searchResult = await this.container.distube.search(focusedOption.value, {
 					limit: 15,
