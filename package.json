@@ -24,12 +24,14 @@
         "colorette": "^2.0.20",
         "discord.js": "^14.14.1",
         "distube": "^4.2.2",
+        "lodash": "^4.17.21",
         "sodium-native": "^4.1.1"
     },
     "devDependencies": {
         "@sapphire/cli": "^1.9.3",
         "@sapphire/prettier-config": "^2.0.0",
         "@sapphire/ts-config": "^5.0.0",
+        "@types/lodash": "^4.17.1",
         "@types/node": "^20.11.5",
         "@types/ws": "^8.5.10",
         "npm-run-all2": "^6.1.1",

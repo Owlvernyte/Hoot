@@ -2,9 +2,9 @@ import type { ChatInputCommandSuccessPayload, Command, ContextMenuCommandSuccess
 import { container } from '@sapphire/framework';
 import { send } from '@sapphire/plugin-editable-commands';
 import { cyan } from 'colorette';
-import { EmbedBuilder, type APIUser, type Guild, type Message, type User } from 'discord.js';
-import { RandomLoadingMessage } from './constants';
+import { ChatInputCommandInteraction, EmbedBuilder, type APIUser, type Guild, type Message, type User } from 'discord.js';
 import { Queue } from 'distube';
+import { RandomLoadingMessage } from './constants';
 
 /**
  * Picks a random item from an array
@@ -23,6 +23,14 @@ export function pickRandom<T>(array: readonly T[]): T {
  */
 export function sendLoadingMessage(message: Message): Promise<typeof message> {
 	return send(message, { embeds: [new EmbedBuilder().setDescription(pickRandom(RandomLoadingMessage)).setColor('#FF0000')] });
+}
+
+/**
+ * Reply interaction with a loading message
+ * @param interaction The interaction data for which to send the loading message
+ */
+export function replyLoadingChatInputInteraction(interaction: ChatInputCommandInteraction): Promise<Message> {
+	return interaction.reply({ embeds: [new EmbedBuilder().setDescription(pickRandom(RandomLoadingMessage)).setColor('#FF0000')], fetchReply: true });
 }
 
 export function logSuccessCommand(payload: ContextMenuCommandSuccessPayload | ChatInputCommandSuccessPayload | MessageCommandSuccessPayload): void {
