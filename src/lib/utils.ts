@@ -2,9 +2,20 @@ import type { ChatInputCommandSuccessPayload, Command, ContextMenuCommandSuccess
 import { container } from '@sapphire/framework';
 import { send } from '@sapphire/plugin-editable-commands';
 import { cyan } from 'colorette';
-import { ChatInputCommandInteraction, EmbedBuilder, type APIUser, type Guild, type Message, type User } from 'discord.js';
+import {
+	ActivityOptions,
+	ActivityType,
+	ChatInputCommandInteraction,
+	EmbedBuilder,
+	type APIUser,
+	type Guild,
+	type Message,
+	type User
+} from 'discord.js';
 import { Queue } from 'distube';
 import { RandomLoadingMessage } from './constants';
+import { schedule as cronSchedule } from 'node-cron';
+import { Cron, predefined } from '@sapphire/time-utilities';
 
 /**
  * Picks a random item from an array
@@ -86,4 +97,36 @@ export function getQueueStatus(queue: Queue) {
 		filter: `${filter}`,
 		autoplay: `${autoplay}`
 	};
+}
+
+export const getRandomActivity = (
+	statuses: ActivityOptions[] = [
+		{
+			name: `${container.client.guilds.cache.size} servers | /play`,
+			type: ActivityType.Watching
+		},
+		{
+			name: `music | /play`,
+			type: ActivityType.Listening
+		},
+		{
+			name: `music in ${container.distube.queues.collection.size} servers | /play`,
+			type: ActivityType.Playing
+		}
+	]
+): ActivityOptions => pickRandom(statuses);
+
+export function setupStatusChanger() {
+	const { client } = container;
+
+	client.user?.setActivity(getRandomActivity());
+
+	const cronTime = new Cron(predefined['@hourly']);
+
+	container.logger.info('[CRON/STATUS] StatusChanger installed at 0 minutes past the hour, every 2 hours UTC');
+	cronSchedule(cronTime.cron, () => {
+		const status = getRandomActivity();
+		container.logger.info(`[CRON] Status changed to ${status.name}`);
+		client.user?.setActivity(status);
+	});
 }
