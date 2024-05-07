@@ -1,7 +1,7 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import { Command } from '@sapphire/framework';
-import { ErrorEmbed, InfoEmbed, SuccessEmbed } from '../../messages';
 import { HootBaseError } from '../../lib/errors/HootBaseError';
+import { InfoEmbed, SuccessEmbed } from '../../messages';
 
 @ApplyOptions<Command.Options>({
 	description: 'Skip currently playing song',
@@ -22,26 +22,19 @@ export class UserCommand extends Command {
 
 		const force = interaction.options.getBoolean('force') || false;
 
-		const queue = this.container.distube.getQueue(guild!)!;
+		const queue = this.container.distube.getQueue(guild!.id)!;
 
 		async function skip() {
-			try {
-				const song = await queue.skip();
+			const song = await queue.skip();
 
-				return interaction.reply({
-					embeds: [
-						new SuccessEmbed(`Skipped!`).addFields({
-							name: `Now Playing`,
-							value: `[\`${song.name}\`](${song.url})`
-						})
-					]
-				});
-			} catch (e) {
-				return interaction.reply({
-					embeds: [new ErrorEmbed((e as Error)?.message || `There was an issue while executing that button!`)],
-					ephemeral: true
-				});
-			}
+			return interaction.reply({
+				embeds: [
+					new SuccessEmbed(`Skipped!`).addFields({
+						name: `Now Playing`,
+						value: `[\`${song.name}\`](${song.url})`
+					})
+				]
+			});
 		}
 
 		if (force && interaction.user.id == queue?.owner?.user.id) return skip();
@@ -56,14 +49,20 @@ export class UserCommand extends Command {
 			} else throw new HootBaseError(`You have already voted!`, interaction);
 		}
 
-		queue.skipVotes.set(interaction.user.id, interaction.member);
+		const member = await interaction.guild?.members.fetch(interaction.user.id);
 
-		if (queue.skipVotes.size < required)
+		if (!member) {
+			throw new HootBaseError('Member should not be null', interaction);
+		}
+
+		queue.skipVotes.set(member.id, member);
+
+		if (queue.skipVotes.size < required) {
 			return interaction.reply({
 				embeds: [new InfoEmbed(`${queue.skipVotes.size}/${required} skip votes\nVotes: ${queue.skipVotes.map((v) => `${v}`).join(', ')}`)]
 			});
-		else if (queue.skipVotes.size >= required) {
-			return skip();
 		}
+
+		return skip();
 	}
 }

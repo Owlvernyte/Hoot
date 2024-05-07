@@ -22,7 +22,7 @@ export class UserCommand extends Command {
 
 		if (!guild) throw new HootBaseError('Guild should not be null');
 
-		const queue = this.container.distube.getQueue(guild);
+		const queue = this.container.distube.getQueue(guild.id);
 
 		if (!queue) throw new HootBaseError('There is nothing playing!');
 

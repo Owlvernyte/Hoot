@@ -20,7 +20,7 @@ export class UserCommand extends Command {
 	public override async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
 		const { guild } = interaction;
 
-		const queue = this.container.distube.getQueue(guild!)!;
+		const queue = this.container.distube.getQueue(guild!.id)!;
 
 		if (queue?.owner?.user.id != interaction.user.id) throw new HootBaseError(`You have no right to do this!`, interaction);
 

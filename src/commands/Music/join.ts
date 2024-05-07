@@ -6,7 +6,7 @@ import { HootBaseError } from '../../lib/errors/HootBaseError';
 
 @ApplyOptions<Command.Options>({
 	description: 'Join a voice based channel',
-    enabled: false
+	enabled: false
 })
 export class UserCommand extends Command {
 	public override registerApplicationCommands(registry: Command.Registry) {

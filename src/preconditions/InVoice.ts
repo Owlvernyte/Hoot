@@ -8,7 +8,9 @@ export class UserPrecondition extends Precondition {
 		const member = interaction.member as GuildMember | undefined;
 		if (!member) return this.error({ message: this.#message });
 
-		return member.voice.channel != null && member.voice.channel.isVoiceBased() && !member.voice.channel.isDMBased() ? this.ok() : this.error({ message: this.#message });
+		return member.voice.channel != null && member.voice.channel.isVoiceBased() && !member.voice.channel.isDMBased()
+			? this.ok()
+			: this.error({ message: this.#message });
 	}
 }
 

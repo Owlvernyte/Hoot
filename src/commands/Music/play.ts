@@ -2,6 +2,7 @@ import { ApplyOptions } from '@sapphire/decorators';
 import { Command } from '@sapphire/framework';
 import { AutocompleteInteraction } from 'discord.js';
 import { QueueMetadata } from '../../lib/HootClient';
+import { HootBaseError } from '../../lib/errors/HootBaseError';
 
 @ApplyOptions<Command.Options>({
 	description: 'Play a song',
@@ -26,7 +27,7 @@ export class UserCommand extends Command {
 		const member = await interaction.guild?.members.fetch(interaction.user.id);
 
 		if (!member) {
-			throw new Error('Member should not be null');
+			throw new HootBaseError('Member should not be null', interaction);
 		}
 
 		await interaction.deferReply({ ephemeral: true });
@@ -41,7 +42,7 @@ export class UserCommand extends Command {
 		const textChannel = interaction.channel?.isTextBased() && !interaction.channel.isDMBased() ? interaction.channel : null;
 
 		if (!voiceChannel || !textChannel) {
-			throw new Error('Voice channel or text channel should not be null');
+			throw new HootBaseError('Voice channel or text channel should not be null', interaction);
 		}
 
 		// @ts-ignore
@@ -65,5 +66,4 @@ export class UserCommand extends Command {
 			}))
 		);
 	}
-
 }

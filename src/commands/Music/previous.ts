@@ -1,7 +1,7 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import { Command } from '@sapphire/framework';
-import { ErrorEmbed, SuccessEmbed } from '../../messages';
 import { HootBaseError } from '../../lib/errors/HootBaseError';
+import { SuccessEmbed } from '../../messages';
 
 @ApplyOptions<Command.Options>({
 	description: 'Play previous song',
@@ -22,26 +22,19 @@ export class UserCommand extends Command {
 
 		const force = interaction.options.getBoolean('force') || false;
 
-		const queue = this.container.distube.getQueue(guild!)!;
+		const queue = this.container.distube.getQueue(guild!.id)!;
 
 		async function previous() {
-			try {
-				const song = await queue.previous();
+			const song = await queue.previous();
 
-				return interaction.reply({
-					embeds: [
-						new SuccessEmbed(`Backed!`).addFields({
-							name: `Now Playing`,
-							value: `[\`${song.name}\`](${song.url})`
-						})
-					]
-				});
-			} catch (e) {
-				return interaction.reply({
-					embeds: [new ErrorEmbed((e as Error)?.message || `There was an issue while executing that button!`)],
-					ephemeral: true
-				});
-			}
+			return interaction.reply({
+				embeds: [
+					new SuccessEmbed(`Backed!`).addFields({
+						name: `Now Playing`,
+						value: `[\`${song.name}\`](${song.url})`
+					})
+				]
+			});
 		}
 
 		if (force && interaction.user.id == queue?.owner?.user.id) return previous();
@@ -56,14 +49,20 @@ export class UserCommand extends Command {
 			} else throw new HootBaseError(`You have already voted!`, interaction);
 		}
 
-		queue.backVotes.set(interaction.user.id, interaction.member);
+		const member = await interaction.guild?.members.fetch(interaction.user.id);
 
-		if (queue.backVotes.size < required)
+		if (!member) {
+			throw new HootBaseError('Member should not be null', interaction);
+		}
+
+		queue.skipVotes.set(member.id, member);
+
+		if (queue.backVotes.size < required) {
 			return interaction.reply({
 				embeds: [new SuccessEmbed(`${queue.backVotes.size}/${required} back votes\nVotes: ${queue.backVotes.map((v) => `${v}`).join(', ')}`)]
 			});
-		else if (queue.backVotes.size >= required) {
-			return previous();
 		}
+
+		return previous();
 	}
 }

@@ -30,4 +30,3 @@ export class ButtonHandler extends InteractionHandler {
 		return this.some();
 	}
 }
-

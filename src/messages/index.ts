@@ -1,2 +1,2 @@
-export * from './components'
-export * from './embeds'
+export * from './components';
+export * from './embeds';

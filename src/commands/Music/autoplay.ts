@@ -4,7 +4,7 @@ import { CustomEvents } from '../../lib/constants';
 import { SuccessEmbed } from '../../messages';
 
 @ApplyOptions<Command.Options>({
-	description: "Toggle autoplay mode",
+	description: 'Toggle autoplay mode',
 	preconditions: ['InVoice', 'InQueueWithOwner']
 })
 export class UserCommand extends Command {

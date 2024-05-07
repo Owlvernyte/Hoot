@@ -26,7 +26,7 @@ export class UserCommand extends Command {
 
 		if (old_position === new_position) throw new Error(`Nothing changed`);
 
-		const queue = this.container.distube.getQueue(guild!);
+		const queue = this.container.distube.getQueue(guild!.id);
 
 		if (queue?.owner?.user.id != interaction.user.id) throw new Error(`You have no right to do this!`);
 

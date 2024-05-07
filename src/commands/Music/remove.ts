@@ -4,7 +4,7 @@ import { SuccessEmbed } from '../../messages';
 import { HootBaseError } from '../../lib/errors/HootBaseError';
 
 @ApplyOptions<Command.Options>({
-	description: "Remove a song from queue",
+	description: 'Remove a song from queue',
 	preconditions: ['InVoice', 'InQueueWithOwner']
 })
 export class UserCommand extends Command {
@@ -20,7 +20,7 @@ export class UserCommand extends Command {
 	public override async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
 		const { guild } = interaction;
 
-		const queue = this.container.distube.getQueue(guild!)!;
+		const queue = this.container.distube.getQueue(guild!.id)!;
 
 		if (queue?.owner?.user.id != interaction.user.id) throw new HootBaseError(`You have no right to do this!`);
 
@@ -34,7 +34,7 @@ export class UserCommand extends Command {
 
 		const removed = queue.songs.splice(position, 1).shift();
 
-        if (!removed) throw new HootBaseError(`Nothing removed`, interaction);
+		if (!removed) throw new HootBaseError(`Nothing removed`, interaction);
 
 		return interaction.reply({
 			embeds: [new SuccessEmbed(`Removed [\`${removed.name}\`](${removed.url}) from the queue`)]
