@@ -2,6 +2,8 @@ import { ApplicationCommandRegistries, SapphireClient, container } from '@sapphi
 import { ClientOptions } from 'discord.js';
 import { DisTube, DisTubeOptions } from 'distube';
 
+const dev = process.env.NODE_ENV !== 'production';
+
 export class HootClient extends SapphireClient {
 	distube: DisTube;
 
@@ -17,7 +19,7 @@ export class HootClient extends SapphireClient {
 		this.distube = distube;
 		container.distube = distube;
 
-		ApplicationCommandRegistries.setDefaultGuildIds(process.env.NODE_ENV === 'development' ? [process.env.DEV_GUILD_ID] : null);
+		ApplicationCommandRegistries.setDefaultGuildIds(dev ? [process.env.DEV_GUILD_ID] : undefined);
 	}
 }
 
