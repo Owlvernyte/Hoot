@@ -19,7 +19,7 @@ export class HootClient extends SapphireClient {
 		this.distube = distube;
 		container.distube = distube;
 
-		ApplicationCommandRegistries.setDefaultGuildIds(dev ? [process.env.DEV_GUILD_ID] : undefined);
+		dev && ApplicationCommandRegistries.setDefaultGuildIds([process.env.DEV_GUILD_ID]);
 	}
 }
 
