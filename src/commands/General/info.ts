@@ -1,5 +1,5 @@
 import { ApplyOptions } from '@sapphire/decorators';
-import { Command } from '@sapphire/framework';
+import { Command, version as sapphireVersion } from '@sapphire/framework';
 import { EmbedBuilder, version as discordJsVersion } from 'discord.js';
 import * as os from 'os';
 import packageJson from '../../../package.json';
@@ -44,7 +44,7 @@ export class UserCommand extends Command {
 		const versions = {
 			[`Node.js`]: `${process.version}`,
 			[`Discord.js`]: `${discordJsVersion}`,
-			[`Sapphire.js`]: `${discordJsVersion}`,
+			[`Sapphire.js`]: `${sapphireVersion}`,
 			[`DisTube.js`]: `${this.container.distube.version}`
 		};
 
