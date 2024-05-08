@@ -29,6 +29,8 @@ jobs:
     - name: Install dependencies
       run: pnpm install
     - name: Format with prettier
-      run: pnpm format
+      run: pnpm run format
+    - name: Types check
+      run: pnpm run type:check
     - name: Build to dist with tsc
       run: pnpm run build
