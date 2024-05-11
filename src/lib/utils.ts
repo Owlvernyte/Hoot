@@ -135,11 +135,15 @@ export function getRandomInt(min: number, max: number) {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-export function getRandomHoot(oLength: number = 0, upperH: boolean = false, upperCase: boolean = false) {
-	const min = 1,
+export function getRandomHootString(oLength: number = 0, upperH: boolean = false, upperCase: boolean = false) {
+	const min = 2,
 		max = oLength <= 0 ? 10 : oLength > 10 ? 10 : oLength;
 	const randomLength = getRandomInt(min, max);
-	const oString = new Array(randomLength).fill('o').join('');
+	const oString = generateDuplicateString('o', randomLength);
 	const content = `${upperH ? 'H' : 'h'}${oString}t`;
 	return upperCase ? content.toUpperCase() : content;
+}
+
+export function generateDuplicateString(input: string, length: number) {
+	return new Array(length).fill(input).join('');
 }
