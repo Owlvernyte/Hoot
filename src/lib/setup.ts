@@ -29,5 +29,7 @@ declare module '@skyra/env-utilities' {
 		OWNERS: ArrayString;
 		DEV_GUILD_ID: string;
 		SUPPORT_SERVER_ID: string;
+        SUPPORT_SERVER_INVITE_LINK: string;
+		SUPPORT_URL: string;
 	}
 }
