@@ -2,7 +2,7 @@ import { ApplyOptions } from '@sapphire/decorators';
 import { PaginatedMessage } from '@sapphire/discord.js-utilities';
 import { Command } from '@sapphire/framework';
 import { ApplicationCommandType, EmbedBuilder, chatInputApplicationCommandMention } from 'discord.js';
-import { getRandomHoot, replyLoadingChatInputInteraction } from '../../lib/utils';
+import { getRandomHootString, replyLoadingChatInputInteraction } from '../../lib/utils';
 
 const dev = process.env.NODE_ENV !== 'production';
 
@@ -25,7 +25,7 @@ export class UserCommand extends Command {
 			template: new EmbedBuilder()
 				.setColor('Random')
 				// Be sure to add a space so this is offset from the page numbers!
-				.setFooter({ text: ` ${getRandomHoot()}`, iconURL: `${interaction.user.displayAvatarURL()}` })
+				.setFooter({ text: ` ${getRandomHootString()}`, iconURL: `${interaction.user.displayAvatarURL()}` })
 				.setThumbnail(this.container.client.user?.displayAvatarURL() || null)
 		});
 
