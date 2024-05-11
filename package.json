@@ -1,6 +1,6 @@
 {
     "name": "hoot",
-    "version": "0.2.0",
+    "version": "0.2.1",
     "main": "dist/index.js",
     "author": "@Owlvernyte",
     "license": "Apache-2.0",
@@ -55,6 +55,10 @@
         "watch:start": "tsc-watch --onSuccess \"node ./dist/index.js\"",
         "format": "prettier --write \"src/**/*.ts\"",
         "type:check": "tsc --pretty --skipLibCheck --noEmit"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Owlvernyte/Hoot.git"
     },
     "prettier": "@sapphire/prettier-config"
 }

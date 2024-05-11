@@ -130,3 +130,16 @@ export function setupStatusChanger() {
 		client.user?.setActivity(status);
 	});
 }
+
+export function getRandomInt(min: number, max: number) {
+	return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+export function getRandomHoot(oLength: number = 0, upperH: boolean = false, upperCase: boolean = false) {
+	const min = 1,
+		max = oLength <= 0 ? 10 : oLength > 10 ? 10 : oLength;
+	const randomLength = getRandomInt(min, max);
+	const oString = new Array(randomLength).fill('o').join('');
+	const content = `${upperH ? 'H' : 'h'}${oString}t`;
+	return upperCase ? content.toUpperCase() : content;
+}
