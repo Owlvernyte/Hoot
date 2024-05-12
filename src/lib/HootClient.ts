@@ -1,8 +1,11 @@
 import { ApplicationCommandRegistries, SapphireClient, container } from '@sapphire/framework';
+import { envParseArray, envParseString } from '@skyra/env-utilities';
 import { ClientOptions } from 'discord.js';
 import { DisTube, DisTubeOptions } from 'distube';
 
-const dev = process.env.NODE_ENV !== 'production';
+const dev = envParseString('NODE_ENV') !== 'production';
+const devGuildIds = dev ? envParseArray('DEV_GUILD_IDS') : null;
+console.log(devGuildIds);
 
 export class HootClient extends SapphireClient {
 	distube: DisTube;
@@ -19,11 +22,11 @@ export class HootClient extends SapphireClient {
 		this.distube = distube;
 		container.distube = distube;
 
-		dev && ApplicationCommandRegistries.setDefaultGuildIds([process.env.DEV_GUILD_ID]);
+		dev && ApplicationCommandRegistries.setDefaultGuildIds(devGuildIds);
 
-        for (const command of container.stores.get('commands').values()) {
-            command.applicationCommandRegistry.registerChatInputCommand((b) => b.setDMPermission(false));
-        }
+		for (const command of container.stores.get('commands').values()) {
+			command.applicationCommandRegistry.registerChatInputCommand((b) => b.setDMPermission(false));
+		}
 
 		ApplicationCommandRegistries.registries.forEach((r) => r.registerChatInputCommand((b) => b.setDMPermission(false)));
 	}

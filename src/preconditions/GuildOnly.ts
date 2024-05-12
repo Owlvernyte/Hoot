@@ -1,7 +1,7 @@
-import { Precondition } from '@sapphire/framework';
+import { AllFlowsPrecondition } from '@sapphire/framework';
 import type { ChatInputCommandInteraction, ContextMenuCommandInteraction, Message } from 'discord.js';
 
-export class UserPrecondition extends Precondition {
+export class UserPrecondition extends AllFlowsPrecondition {
 	#message: string = 'This command can only be used in guilds!';
 
 	public override messageRun(message: Message) {
