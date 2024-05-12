@@ -21,6 +21,10 @@ export class HootClient extends SapphireClient {
 
 		dev && ApplicationCommandRegistries.setDefaultGuildIds([process.env.DEV_GUILD_ID]);
 
+        for (const command of container.stores.get('commands').values()) {
+            command.applicationCommandRegistry.registerChatInputCommand((b) => b.setDMPermission(false));
+        }
+
 		ApplicationCommandRegistries.registries.forEach((r) => r.registerChatInputCommand((b) => b.setDMPermission(false)));
 	}
 }
