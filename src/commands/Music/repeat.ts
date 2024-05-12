@@ -7,7 +7,8 @@ import { CustomEvents } from '../../lib/constants';
 
 @ApplyOptions<Command.Options>({
 	description: 'Set repeat mode',
-	preconditions: ['InVoice', 'InQueueWithOwner']
+	preconditions: ['InVoice', 'InQueueWithOwner'],
+    runIn: ['GUILD_ANY']
 })
 export class UserCommand extends Command {
 	public override registerApplicationCommands(registry: Command.Registry) {

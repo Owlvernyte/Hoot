@@ -5,7 +5,6 @@ import { DisTube, DisTubeOptions } from 'distube';
 
 const dev = envParseString('NODE_ENV') !== 'production';
 const devGuildIds = dev ? envParseArray('DEV_GUILD_IDS') : null;
-console.log(devGuildIds);
 
 export class HootClient extends SapphireClient {
 	distube: DisTube;

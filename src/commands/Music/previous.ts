@@ -4,7 +4,8 @@ import { voteAction } from '../../lib/distube/voteAction';
 
 @ApplyOptions<Command.Options>({
 	description: 'Play previous song',
-	preconditions: ['InVoice', 'InQueue']
+	preconditions: ['InVoice', 'InQueue'],
+    runIn: ['GUILD_ANY']
 })
 export class UserCommand extends Command {
 	public override registerApplicationCommands(registry: Command.Registry) {

@@ -14,7 +14,8 @@ const defaultFilters = Object.keys(disTubeDefaultFilters).map((mf) => {
 
 @ApplyOptions<Command.Options>({
 	description: 'Add or remove filter(s)',
-	preconditions: ['InVoice', 'InQueue']
+	preconditions: ['InVoice', 'InQueue'],
+    runIn: ['GUILD_ANY']
 })
 export class UserCommand extends Command {
 	public override registerApplicationCommands(registry: Command.Registry) {

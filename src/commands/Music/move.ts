@@ -5,7 +5,8 @@ import { Song } from 'distube';
 
 @ApplyOptions<Command.Options>({
 	description: 'Move the song to other position',
-	preconditions: ['InVoice', 'InQueueWithOwner']
+	preconditions: ['InVoice', 'InQueueWithOwner'],
+    runIn: ['GUILD_ANY']
 })
 export class UserCommand extends Command {
 	public override registerApplicationCommands(registry: Command.Registry) {

@@ -5,7 +5,8 @@ import { SuccessEmbed } from '../../messages';
 
 @ApplyOptions<Command.Options>({
 	description: 'Toggle autoplay mode',
-	preconditions: ['InVoice', 'InQueueWithOwner']
+	preconditions: ['InVoice', 'InQueueWithOwner'],
+    runIn: ['GUILD_ANY']
 })
 export class UserCommand extends Command {
 	public override registerApplicationCommands(registry: Command.Registry) {

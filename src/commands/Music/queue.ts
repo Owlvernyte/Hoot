@@ -7,7 +7,8 @@ import { PaginatedMessage } from '@sapphire/discord.js-utilities';
 
 @ApplyOptions<Command.Options>({
 	description: 'Show music queue',
-	preconditions: ['InQueue']
+	preconditions: ['InQueue'],
+    runIn: ['GUILD_ANY']
 })
 export class UserCommand extends Command {
 	public override registerApplicationCommands(registry: Command.Registry) {

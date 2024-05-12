@@ -6,7 +6,8 @@ import { CustomEvents } from '../../lib/constants';
 
 @ApplyOptions<Command.Options>({
 	description: 'Stop the queue',
-	preconditions: ['InVoice', 'InQueue']
+	preconditions: ['InVoice', 'InQueue'],
+    runIn: ['GUILD_ANY']
 })
 export class UserCommand extends Command {
 	public override registerApplicationCommands(registry: Command.Registry) {

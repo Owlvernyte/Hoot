@@ -5,7 +5,8 @@ import { HootBaseError } from '../../lib/errors/HootBaseError';
 
 @ApplyOptions<Command.Options>({
 	description: 'Forward to time of a song',
-	preconditions: ['InVoice', 'InQueue']
+	preconditions: ['InVoice', 'InQueue'],
+    runIn: ['GUILD_ANY']
 })
 export class UserCommand extends Command {
 	public override registerApplicationCommands(registry: Command.Registry) {

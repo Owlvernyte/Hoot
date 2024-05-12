@@ -3,7 +3,8 @@ import { Command } from '@sapphire/framework';
 import { voteAction } from '../../lib/distube/voteAction';
 @ApplyOptions<Command.Options>({
 	description: 'Skip currently playing song',
-	preconditions: ['InVoice', 'InQueue']
+	preconditions: ['InVoice', 'InQueue'],
+    runIn: ['GUILD_ANY']
 })
 export class UserCommand extends Command {
 	public override registerApplicationCommands(registry: Command.Registry) {

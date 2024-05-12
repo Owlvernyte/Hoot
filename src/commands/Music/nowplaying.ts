@@ -6,7 +6,8 @@ import { millify } from 'millify';
 
 @ApplyOptions<Command.Options>({
 	description: 'Whats the playing song?',
-	preconditions: ['InVoice', 'InQueue']
+	preconditions: ['InVoice', 'InQueue'],
+    runIn: ['GUILD_ANY']
 })
 export class UserCommand extends Command {
 	public override registerApplicationCommands(registry: Command.Registry) {

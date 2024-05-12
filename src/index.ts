@@ -19,10 +19,13 @@ const client = new HootClient({
 		GatewayIntentBits.Guilds,
 		GatewayIntentBits.GuildVoiceStates
 	],
-	partials: [Partials.Channel],
-	loadMessageCommandListeners: true,
+	partials: [Partials.Channel, Partials.GuildMember, Partials.User],
+	loadMessageCommandListeners: false,
 	api: {
 		automaticallyConnect: false
+	},
+	defaultCooldown: {
+		delay: 5000
 	}
 });
 

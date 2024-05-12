@@ -6,7 +6,8 @@ import { HootBaseError } from '../../lib/errors/HootBaseError';
 
 @ApplyOptions<Command.Options>({
 	description: 'Claim the queue in case the owner left',
-	preconditions: ['InVoice', 'InQueue']
+	preconditions: ['InVoice', 'InQueue'],
+    runIn: ['GUILD_ANY']
 })
 export class UserCommand extends Command {
 	public override registerApplicationCommands(registry: Command.Registry) {

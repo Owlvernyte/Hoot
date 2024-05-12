@@ -5,7 +5,8 @@ import { SuccessEmbed } from '../../messages';
 
 @ApplyOptions<Command.Options>({
 	description: 'Resume the queue',
-	preconditions: ['InVoice', 'InQueue']
+	preconditions: ['InVoice', 'InQueue'],
+    runIn: ['GUILD_ANY']
 })
 export class UserCommand extends Command {
 	public override registerApplicationCommands(registry: Command.Registry) {

@@ -5,7 +5,8 @@ import { HootBaseError } from '../../lib/errors/HootBaseError';
 
 @ApplyOptions<Command.Options>({
 	description: 'Pause the queue',
-	preconditions: ['InVoice', 'InQueueWithOwner']
+	preconditions: ['InVoice', 'InQueueWithOwner'],
+    runIn: ['GUILD_ANY']
 })
 export class UserCommand extends Command {
 	public override registerApplicationCommands(registry: Command.Registry) {
