@@ -12,16 +12,12 @@ const client = new HootClient({
 	},
 	shards: 'auto',
 	intents: [
-		GatewayIntentBits.DirectMessageReactions,
-		GatewayIntentBits.DirectMessages,
-		GatewayIntentBits.GuildModeration,
 		GatewayIntentBits.GuildEmojisAndStickers,
 		GatewayIntentBits.GuildMembers,
 		GatewayIntentBits.GuildMessageReactions,
 		GatewayIntentBits.GuildMessages,
 		GatewayIntentBits.Guilds,
-		GatewayIntentBits.GuildVoiceStates,
-		GatewayIntentBits.MessageContent
+		GatewayIntentBits.GuildVoiceStates
 	],
 	partials: [Partials.Channel],
 	loadMessageCommandListeners: true,

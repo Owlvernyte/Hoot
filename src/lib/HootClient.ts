@@ -18,6 +18,8 @@ export class HootClient extends SapphireClient {
 		container.distube = distube;
 
 		ApplicationCommandRegistries.setDefaultGuildIds(process.env.NODE_ENV === 'development' ? [process.env.DEV_GUILD_ID] : null);
+
+		ApplicationCommandRegistries.registries.forEach((r) => r.registerChatInputCommand((b) => b.setDMPermission(false)));
 	}
 }
 
