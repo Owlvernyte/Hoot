@@ -15,7 +15,7 @@ import {
 import { Queue } from 'distube';
 import { RandomLoadingMessage } from './constants';
 import { schedule as cronSchedule } from 'node-cron';
-import { Cron, predefined } from '@sapphire/time-utilities';
+import { Cron,  } from '@sapphire/time-utilities';
 
 /**
  * Picks a random item from an array
@@ -121,12 +121,12 @@ export function setupStatusChanger() {
 
 	client.user?.setActivity(getRandomActivity());
 
-	const cronTime = new Cron(predefined['@hourly']);
+	const cronTime = new Cron('* * * * *');
 
-	container.logger.info('[CRON/STATUS] StatusChanger installed at 0 minutes past the hour, every 2 hours UTC');
+	container.logger.info(`[CRON/STATUS] StatusChanger installed ${cronTime.normalized}, next run '${cronTime.next()}'`);
 	cronSchedule(cronTime.cron, () => {
 		const status = getRandomActivity();
-		container.logger.info(`[CRON] Status changed to ${status.name}`);
+		container.logger.info(`[CRON] Status changed to '${status.name}', next run '${cronTime.next()}'`);
 		client.user?.setActivity(status);
 	});
 }
