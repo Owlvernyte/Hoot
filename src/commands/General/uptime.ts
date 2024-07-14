@@ -16,39 +16,37 @@ export class UserCommand extends Command {
 	}
 
 	public override async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
-        const { client } = this.container
+		const { client } = this.container;
 
-        let totalSeconds = (client.uptime || -1) / 1000
-        let days = Math.floor(totalSeconds / 86400)
-        totalSeconds %= 86400
-        let hours = Math.floor(totalSeconds / 3600)
-        totalSeconds %= 3600
-        let minutes = Math.floor(totalSeconds / 60)
-        let seconds = Math.floor(totalSeconds % 60)
-        let uptime = `${days}d${hours}h${minutes}m${seconds}s`
+		let totalSeconds = (client.uptime || -1) / 1000;
+		let days = Math.floor(totalSeconds / 86400);
+		totalSeconds %= 86400;
+		let hours = Math.floor(totalSeconds / 3600);
+		totalSeconds %= 3600;
+		let minutes = Math.floor(totalSeconds / 60);
+		let seconds = Math.floor(totalSeconds % 60);
+		let uptime = `${days}d${hours}h${minutes}m${seconds}s`;
 
-        const embed = new EmbedBuilder().setColor('Random').addFields([
-            {
-                name: `Online`,
-                value: codeBlock(uptime),
-                inline: false,
-            },
-            {
-                name: `API Latency`,
-                value: codeBlock(Math.round(client.ws.ping) + 'ms'),
-                inline: true,
-            },
-            {
-                name: `Client Latency`,
-                value: codeBlock(
-                    Math.round(Date.now() - interaction.createdTimestamp) + 'ms'
-                ),
-                inline: true,
-            },
-        ])
+		const embed = new EmbedBuilder().setColor('Random').addFields([
+			{
+				name: `Online`,
+				value: codeBlock(uptime),
+				inline: false
+			},
+			{
+				name: `API Latency`,
+				value: codeBlock(Math.round(client.ws.ping) + 'ms'),
+				inline: true
+			},
+			{
+				name: `Client Latency`,
+				value: codeBlock(Math.round(Date.now() - interaction.createdTimestamp) + 'ms'),
+				inline: true
+			}
+		]);
 
-        return interaction.reply({
-            embeds: [embed],
-        })
+		return interaction.reply({
+			embeds: [embed]
+		});
 	}
 }

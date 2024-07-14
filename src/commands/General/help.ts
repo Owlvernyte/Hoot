@@ -30,8 +30,8 @@ export class UserCommand extends Command {
 		});
 
 		paginatedMessage.addPageEmbed(this.getWelcomeEmbed());
-        const commandEmbeds = await this.getCommandsEmbeds(interaction);
-        commandEmbeds.forEach((embed) => paginatedMessage.addPageEmbed(embed));
+		const commandEmbeds = await this.getCommandsEmbeds(interaction);
+		commandEmbeds.forEach((embed) => paginatedMessage.addPageEmbed(embed));
 
 		await paginatedMessage.run(response, interaction.user);
 
