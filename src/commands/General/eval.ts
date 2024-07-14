@@ -13,7 +13,7 @@ import { inspect } from 'util';
 	preconditions: ['OwnerOnly'],
 	flags: ['async', 'hidden', 'showHidden', 'silent', 's'],
 	options: ['depth'],
-	enabled: false,
+	enabled: false
 })
 export class UserCommand extends Command {
 	public override async messageRun(message: Message, args: Args) {

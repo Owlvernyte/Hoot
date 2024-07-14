@@ -12,10 +12,11 @@ import {
 	type Message,
 	type User
 } from 'discord.js';
-import { Queue } from 'distube';
 import { RandomLoadingMessage } from './constants';
 import { schedule as cronSchedule } from 'node-cron';
 import { Cron, predefined } from '@sapphire/time-utilities';
+import { HootQueue } from './distube/HootQueue';
+import { bold } from 'discord.js';
 
 /**
  * Picks a random item from an array
@@ -82,21 +83,48 @@ function getGuildInfo(guild: Guild | null) {
 	return `${guild.name}[${cyan(guild.id)}]`;
 }
 
-export function getQueueStatus(queue: Queue) {
+export function getQueueStatus(
+	queue: HootQueue,
+	isBold: boolean = true
+): {
+	volume: string;
+	loop: string;
+	filter: string;
+	upNext: string;
+} {
+	const result = {
+		volume: '',
+		loop: '',
+		filter: '',
+		upNext: ''
+	};
+
 	const volumeIcon = queue.volume > 75 ? '🔊' : queue.volume > 25 ? '🔉' : queue.volume > 0 ? '🔈' : '🔇';
 
-	const loopMode = queue.repeatMode ? (queue.repeatMode === 2 ? '🔁 **Queue**' : '🔂 **This song**') : '';
+	result.volume = `${volumeIcon} ${queue.volume}%`;
 
-	const filter = !queue.filters.names.length ? '' : `🎛 **${queue.filters.names.join(', ').toLocaleUpperCase()}**`;
+	result.loop = queue.repeatMode ? (queue.repeatMode === 2 ? '🔁 Queue' : '🔂 This song') : '';
 
-	const autoplay = !!queue.autoplay ? `\`🅰\` **Up Next**: [\`${queue.songs[0].related[0].name}\`](${queue.songs[0].related[0].url})` : '';
+	result.filter = !queue.filters.names.length ? '' : `🎛 ${queue.filters.names.join(', ').toLocaleUpperCase()}`;
 
-	return {
-		volume: `${volumeIcon} **${queue.volume}%**`,
-		loop: `${loopMode}`,
-		filter: `${filter}`,
-		autoplay: `${autoplay}`
-	};
+	if (isBold) {
+		result.volume = bold(result.volume);
+		if (!!result.filter) result.filter = bold(result.filter);
+		if (!!result.loop) result.loop = bold(result.loop);
+	}
+
+	const nextSong = queue.songs[1];
+	if (!nextSong || !nextSong.url || !nextSong.name) return result;
+
+	// const upNextString = (name: string, url: string) => `\`🎵\` **Up Next**: [${name}](${url})`;
+
+	result.upNext = `\`🎵\` **Up Next**: [\`${nextSong.name}\`](${nextSong.url})`;
+
+	if (isBold) {
+		result.upNext = bold(result.upNext);
+	}
+
+	return result;
 }
 
 export const getRandomActivity = (

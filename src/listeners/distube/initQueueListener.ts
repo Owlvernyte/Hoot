@@ -10,10 +10,8 @@ import { Collection } from 'discord.js';
 }))
 export class InitQueueListener extends Listener {
 	run(queue: HootQueue) {
-		queue.owner = queue.songs[0].member;
 		queue.skipVotes = new Collection();
 		queue.backVotes = new Collection();
-
 		// this.container.logger.debug('InitQueueListener', queue);
 	}
 }

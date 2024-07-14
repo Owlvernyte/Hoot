@@ -24,41 +24,35 @@ export class UserCommand extends Command {
 
 		const song = queue.songs[0];
 
-		const descriptionArray = [];
+		const descriptionArray: string[][] = [[], [], []];
 
-		if (song.isLive) descriptionArray.push(`🔴 \`Live\``);
-		else {
-			descriptionArray.push(`⌛ \`${queue.formattedCurrentTime}\``);
-		}
-
-		if (song.views) descriptionArray.push(`👁 \`${millify(song.views)}\``);
+		if (song.views) descriptionArray[0].push(`👁 \`${millify(song.views)}\``);
 
 		if (song.likes || song.dislikes)
-			descriptionArray.push(`👍 \`${song.likes ? millify(song.likes) : '-'}\`/👎 \`${song.dislikes ? millify(song.dislikes) : '-'}\``);
+			descriptionArray[0].push(`👍 \`${song.likes ? millify(song.likes) : '-'}\`/👎 \`${song.dislikes ? millify(song.dislikes) : '-'}\``);
 
-		if (song.uploader) {
-			descriptionArray.push(
-				`🎙 ${
-					song.uploader.url
-						? `[${song.uploader.name ? song.uploader.name : 'Unknown'}](${song.uploader.url})`
-						: `${song.uploader.name ? song.uploader.name : 'Unknown'}`
-				}`
-			);
-		}
+		descriptionArray[1].push(
+			`🎙 ${
+				song.uploader.url
+					? `[${song.uploader.name ? song.uploader.name : 'Unknown'}](${song.uploader.url})`
+					: `${song.uploader.name ? song.uploader.name : 'Unknown'}`
+			}`
+		);
+		if (song.member) descriptionArray[2].push(`🎧 ${song.member}`);
 
-		if (song.member) descriptionArray.push(`🎧 ${song.member}`);
+		const queueStatus = getQueueStatus(queue, false);
 
 		const embed = new EmbedBuilder()
 			.setColor('Random')
-			.setTitle(`${song.name}`)
-			.setURL(song.url)
+			.setTitle(`${song.name || 'Unknown'}`)
+			.setURL(song.url || null)
 			.setThumbnail(song.thumbnail || null)
 			.setFooter({
-				text: `${song.formattedDuration} | ${getQueueStatus(queue)}`
+				text: `${song.isLive ? `🔴 Live` : `⌛ ${queue.formattedCurrentTime}/${song.formattedDuration}`} | ${Object.values(queueStatus).filter((x) => !!x.length).join(' | ')}`
 			});
 
 		if (descriptionArray.length) {
-			const stat = descriptionArray.join(' | ');
+			const stat = descriptionArray.map((x) => x.join(' | ')).join('\n');
 			embed.setDescription(`${stat}`);
 		}
 

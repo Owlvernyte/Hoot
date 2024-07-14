@@ -14,7 +14,7 @@ export class ButtonHandler extends InteractionHandler {
 		const queue = this.container.distube.getQueue(guild!.id)!;
 
 		if (!queue) throw new HootBaseError('There is nothing playing!', interaction);
-        
+
 		voteAction(interaction, 'skip');
 	}
 

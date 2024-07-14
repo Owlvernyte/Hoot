@@ -1,7 +1,8 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import { Command } from '@sapphire/framework';
-import { QueueMetadata } from '../../lib/HootClient';
 import { HootBaseError } from '../../lib/errors/HootBaseError';
+import { QueueMetadata } from '../../lib/@types';
+import { VoiceBasedChannel } from 'discord.js';
 
 @ApplyOptions<Command.Options>({
 	description: 'Play a song',
@@ -30,11 +31,15 @@ export class UserCommand extends Command {
 		}
 
 		await interaction.deferReply({ ephemeral: true });
+
+		const queue = this.container.distube.getQueue(interaction.guild!);
+
 		const songName = interaction.options.getString('song')!;
 		const skip = interaction.options.getBoolean('skip') || false;
 		const position = interaction.options.getInteger('position') ?? 0;
 		const metadata: QueueMetadata = {
-			i: interaction
+			i: interaction,
+			queueStarter: queue ? queue.owner : member
 		};
 
 		const voiceChannel = await interaction.guild?.channels.fetch(member.voice.channelId!);
@@ -44,13 +49,14 @@ export class UserCommand extends Command {
 			throw new HootBaseError('Voice channel or text channel should not be null', interaction);
 		}
 
-		// @ts-ignore
-		this.container.distube.play(voiceChannel, songName, {
+		await this.container.distube.play(voiceChannel as VoiceBasedChannel, songName, {
 			member,
 			textChannel,
 			skip,
 			position: position,
 			metadata
 		});
+
+        await this.container.distube.updatePanel(interaction);
 	}
 }

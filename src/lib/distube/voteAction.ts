@@ -62,15 +62,3 @@ export async function voteAction(interaction: AcceptableInteraction, action: Vot
 
 	return actionFn();
 }
-
-declare module '@sapphire/framework' {
-	interface Container {
-		distube: import('distube').DisTube;
-	}
-}
-
-declare module 'distube' {
-	interface DisTube {
-		getQueue(guildId: import('discord.js').Snowflake): import('../distube/HootQueue').HootQueue | undefined;
-	}
-}

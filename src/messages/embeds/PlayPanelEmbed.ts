@@ -5,7 +5,7 @@ import { getQueueStatus } from '../../lib/utils';
 
 export class PlayPanelEmbed {
 	static create(song: Song, queue: HootQueue) {
-		const { autoplay, filter, loop, volume } = getQueueStatus(queue);
+		const { upNext, filter, loop, volume } = getQueueStatus(queue);
 		const firstLine = [`⌛ **${song.formattedDuration}**`, volume, loop, filter].filter((x) => !!x.length).join(' | ');
 		return new EmbedBuilder()
 			.setColor(queue.paused ? 'Red' : 'Random')
@@ -14,9 +14,9 @@ export class PlayPanelEmbed {
 				iconURL: `${song.user?.displayAvatarURL()}`
 			})
 			.setTitle(song.name || null)
-			.setURL(song.url)
+			.setURL(song.url || null)
 			.setThumbnail(song.thumbnail || null)
-			.setDescription(`${firstLine}\n\n${autoplay}`)
+			.setDescription(`${firstLine}\n\n${upNext}`)
 			.setFooter({
 				text: `${queue.owner?.user.tag} 💂‍♂️`,
 				iconURL: `${queue.owner?.user.displayAvatarURL()}`
