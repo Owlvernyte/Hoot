@@ -1,8 +1,7 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import { Listener } from '@sapphire/framework';
 import { AutocompleteInteraction } from 'discord.js';
-import { Events, Song } from 'distube';
-import { QueueMetadata } from '../../lib/HootClient';
+import { Events } from 'distube';
 import { maxSongs } from '../../lib/constants';
 import { HootQueue } from '../../lib/distube/HootQueue';
 import { ErrorEmbed, SuccessEmbed } from '../../messages';
@@ -12,7 +11,7 @@ import { ErrorEmbed, SuccessEmbed } from '../../messages';
 	event: Events.ADD_SONG
 }))
 export class AddSongListener extends Listener {
-	public override async run(queue: HootQueue, song: Song<QueueMetadata>) {
+	public override async run(queue: HootQueue, song: HootQueue['songs'][number]) {
 		if (queue.songs.length - 1 > maxSongs) {
 			queue.songs.splice(maxSongs + 1);
 

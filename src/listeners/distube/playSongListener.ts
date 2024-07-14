@@ -1,6 +1,6 @@
 import { ApplyOptions } from '@sapphire/decorators';
 import { Listener } from '@sapphire/framework';
-import { Events, Song } from 'distube';
+import { Events } from 'distube';
 import { HootQueue } from '../../lib/distube/HootQueue';
 import { PlayPanelComponents } from '../../messages/components/PlayPanelComponents';
 import { PlayPanelEmbed } from '../../messages/embeds/PlayPanelEmbed';
@@ -10,8 +10,10 @@ import { PlayPanelEmbed } from '../../messages/embeds/PlayPanelEmbed';
 	event: Events.PLAY_SONG
 }))
 export class PlaySongListener extends Listener {
-	async run(queue: HootQueue, song: Song) {
-		// this.container.logger.debug('PlaySongListener', queue);
+	async run(queue: HootQueue, song: HootQueue['songs'][number]) {
+		if (!queue.owner) {
+			queue.owner = song.metadata.queueStarter;
+		}
 
 		const embeds = [PlayPanelEmbed.create(song, queue)];
 

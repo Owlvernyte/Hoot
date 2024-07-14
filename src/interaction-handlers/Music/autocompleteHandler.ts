@@ -1,7 +1,7 @@
+import { SearchResultType } from '@distube/youtube';
 import { ApplyOptions } from '@sapphire/decorators';
 import { InteractionHandler, InteractionHandlerTypes } from '@sapphire/framework';
 import { AutocompleteInteraction, type ApplicationCommandOptionChoiceData } from 'discord.js';
-import { SearchResultType } from 'distube';
 
 @ApplyOptions<InteractionHandler.Options>({
 	interactionHandlerType: InteractionHandlerTypes.Autocomplete
@@ -13,19 +13,19 @@ export class AutocompleteHandler extends InteractionHandler {
 
 	public override async parse(interaction: AutocompleteInteraction) {
 		if (interaction.commandName !== 'play') return this.none();
-		// Get the focussed (current) option
+
 		const focusedOption = interaction.options.getFocused(true);
 
-		// Ensure that the option name is one that can be autocompleted, or return none if not.
 		switch (focusedOption.name) {
 			case 'song': {
 				if (!focusedOption.value) return this.some([]);
-				// Search for song!
-				const searchResult = await this.container.distube.search(focusedOption.value, {
+
+				const searchResult = await this.container.youtubePlugin.search(focusedOption.value, {
 					limit: 15,
-					type: SearchResultType.VIDEO
+					type: SearchResultType.VIDEO,
+					safeSearch: true
 				});
-				// Map the search results to the structure required for Autocomplete
+
 				return this.some(searchResult.map((match) => ({ name: match.name, value: match.url })));
 			}
 			default:

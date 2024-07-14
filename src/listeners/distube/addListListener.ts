@@ -4,8 +4,8 @@ import { AutocompleteInteraction } from 'discord.js';
 import { Events, Playlist } from 'distube';
 import { maxSongs } from '../../lib/constants';
 import { HootQueue } from '../../lib/distube/HootQueue';
-import { QueueMetadata } from '../../lib/HootClient';
 import { ErrorEmbed, SuccessEmbed } from '../../messages';
+import { QueueMetadata } from '../../lib/@types';
 
 @ApplyOptions<Listener.Options>(({ container }) => ({
 	emitter: container.distube,
