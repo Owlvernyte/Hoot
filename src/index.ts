@@ -21,9 +21,6 @@ const client = new HootClient({
 	],
 	partials: [Partials.Channel],
 	loadMessageCommandListeners: true,
-	api: {
-		automaticallyConnect: false
-	}
 });
 
 const main = async () => {

@@ -33,3 +33,7 @@ declare module '@skyra/env-utilities' {
 		SUPPORT_URL: string;
 	}
 }
+
+// Set Guilds IDs to register commands on needed
+const dev = process.env.NODE_ENV !== 'production';
+dev && ApplicationCommandRegistries.setDefaultGuildIds([process.env.DEV_GUILD_ID]);
