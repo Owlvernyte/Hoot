@@ -1,3 +1,4 @@
+import { predefined } from '@sapphire/time-utilities';
 import { join } from 'path';
 
 export const rootDir = join(__dirname, '..', '..');
@@ -27,3 +28,5 @@ export enum ButtonCustomIds {
 export enum CustomEvents {
 	UpdatePanel = 'updatePanel'
 }
+
+export const statusCronTime: string = predefined['@hourly'];

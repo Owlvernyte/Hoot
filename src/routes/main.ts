@@ -1,13 +1,20 @@
 import { ApplyOptions } from '@sapphire/decorators';
-import { Route, methods, type ApiRequest, type ApiResponse } from '@sapphire/plugin-api';
+import { MethodNames, Route } from '@sapphire/plugin-api';
 
-@ApplyOptions<Route.Options>({ route: `` })
+@ApplyOptions<Route.Options>({ route: '' })
 export class UserRoute extends Route {
-	public override [methods.GET](_request: ApiRequest, response: ApiResponse) {
-		response.json({ message: 'Landing Page!' });
-	}
+	override run(_request: Route.Request, response: Route.Response) {
+		switch (_request.method) {
+			case MethodNames[6]:
+				response.json({ message: 'Page' });
+				break;
 
-	public override [methods.POST](_request: ApiRequest, response: ApiResponse) {
-		response.json({ message: 'Landing Page!' });
+			case MethodNames[19]:
+				response.json({ message: 'Page' });
+				break;
+
+			default:
+				break;
+		}
 	}
 }

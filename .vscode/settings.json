@@ -19,5 +19,6 @@
         "soundcloud",
         "topgg",
         "ytdl"
-    ]
+    ],
+    "typescript.tsdk": "node_modules\\typescript\\lib"
 }

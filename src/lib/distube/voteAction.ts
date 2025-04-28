@@ -6,6 +6,21 @@ import { container } from '@sapphire/framework';
 export type VoteAction = 'skip' | 'previous';
 export type AcceptableInteraction = ChatInputCommandInteraction | ButtonInteraction;
 
+/**
+ * Handles the voting for skip and previous track buttons.
+ *
+ * If the interaction is a button interaction, it will not require a force flag.
+ * If the interaction is a slash command, it will require a force flag.
+ *
+ * Checks if the vote already exists in the queue's skipVotes or backVotes collections.
+ *
+ * If the vote is successful, it will run the action function and reply with a SuccessEmbed.
+ *
+ * If the vote is not successful, it will reply with an InfoEmbed with the current vote count.
+ *
+ * @param interaction The interaction to handle.
+ * @param action The vote action to take.
+ */
 export async function voteAction(interaction: AcceptableInteraction, action: VoteAction) {
 	const { guild } = interaction;
 
@@ -28,7 +43,7 @@ export async function voteAction(interaction: AcceptableInteraction, action: Vot
 
 	if (force && interaction.user.id == queue?.owner?.user.id) return actionFn();
 
-	const membersInVoice = queue.voiceChannel?.members.size || 0;
+	const membersInVoice = queue.voiceChannel?.members.filter((m) => !m.user.bot).size || 0;
 
 	const requiredSize = Math.ceil(membersInVoice / 2);
 

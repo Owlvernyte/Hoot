@@ -1,7 +1,7 @@
 import { EmbedBuilder } from 'discord.js';
 import { Song } from 'distube';
 import { HootQueue } from '../../lib/distube/HootQueue';
-import { getQueueStatus } from '../../lib/utils';
+import { getDetailFromSource, getQueueStatus } from '../../lib/utils';
 
 export class PlayPanelEmbed {
 	static create(song: Song, queue: HootQueue) {
@@ -10,8 +10,8 @@ export class PlayPanelEmbed {
 		return new EmbedBuilder()
 			.setColor(queue.paused ? 'Red' : 'Random')
 			.setAuthor({
-				name: `${song.user?.tag}`,
-				iconURL: `${song.user?.displayAvatarURL()}`
+				name: `${getDetailFromSource(song.source).name}`,
+				iconURL: getDetailFromSource(song.source).icon
 			})
 			.setTitle(song.name || null)
 			.setURL(song.url || null)
