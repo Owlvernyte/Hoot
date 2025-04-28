@@ -1,0 +1,4 @@
+onlyBuiltDependencies:
+  - '@discordjs/opus'
+  - '@distube/yt-dlp'
+  - '@sapphire/type'
