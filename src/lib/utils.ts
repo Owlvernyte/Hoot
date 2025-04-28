@@ -1,10 +1,12 @@
 import type { ChatInputCommandSuccessPayload, Command, ContextMenuCommandSuccessPayload, MessageCommandSuccessPayload } from '@sapphire/framework';
 import { container } from '@sapphire/framework';
 import { send } from '@sapphire/plugin-editable-commands';
+import { Cron } from '@sapphire/time-utilities';
 import { cyan } from 'colorette';
 import {
 	ActivityOptions,
 	ActivityType,
+	bold,
 	ChatInputCommandInteraction,
 	EmbedBuilder,
 	type APIUser,
@@ -12,11 +14,10 @@ import {
 	type Message,
 	type User
 } from 'discord.js';
-import { RandomLoadingMessage } from './constants';
 import { schedule as cronSchedule } from 'node-cron';
-import { Cron, predefined } from '@sapphire/time-utilities';
+import { RandomLoadingMessage, statusCronTime } from './constants';
 import { HootQueue } from './distube/HootQueue';
-import { bold } from 'discord.js';
+import images from './images.json';
 
 /**
  * Picks a random item from an array
@@ -149,9 +150,9 @@ export function setupStatusChanger() {
 
 	client.user?.setActivity(getRandomActivity());
 
-	const cronTime = new Cron(predefined['@hourly']);
+	const cronTime = new Cron(statusCronTime);
 
-	container.logger.info('[CRON/STATUS] StatusChanger installed at 0 minutes past the hour, every 2 hours UTC');
+	container.logger.info(`[CRON/STATUS] StatusChanger installed with cron time: ${cronTime.cron}`);
 	cronSchedule(cronTime.cron, () => {
 		const status = getRandomActivity();
 		container.logger.info(`[CRON] Status changed to ${status.name}`);
@@ -174,4 +175,40 @@ export function getRandomHootString(oLength: number = 0, upperH: boolean = false
 
 export function generateDuplicateString(input: string, length: number) {
 	return new Array(length).fill(input).join('');
+}
+
+/**
+ * Converts a string to normal case, capitalizing the first letter and making the rest lowercase.
+ * @param input - The string to be converted.
+ * @returns The input string with the first letter capitalized and the rest in lowercase.
+ */
+export function normalCaseString(input: string) {
+	return input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
+}
+
+/**
+ * Retrieves the details for a given source.
+ * @param source - The source to get details for (e.g., 'youtube', 'soundcloud').
+ * @returns An object containing the name and optionally an icon of the source.
+ */
+export function getDetailFromSource(source: string): {
+	name: string;
+	icon?: string;
+} {
+	switch (source) {
+		case 'youtube':
+			return {
+				name: 'YouTube',
+				icon: images.youtube
+			};
+		case 'soundcloud':
+			return {
+				name: 'SoundCloud',
+				icon: images.soundcloud
+			};
+		default:
+			return {
+				name: normalCaseString(source)
+			};
+	}
 }
