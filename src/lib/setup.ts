@@ -31,6 +31,7 @@ declare module '@skyra/env-utilities' {
 		SUPPORT_SERVER_ID: string;
 		SUPPORT_SERVER_INVITE_LINK: string;
 		SUPPORT_URL: string;
+		COOKIE_FILE: string;
 	}
 }
 

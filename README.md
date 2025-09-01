@@ -34,7 +34,12 @@ npm install
 ```
 
 ### Define `.env`
+
 Specify a secret file `src/.env` (support `src/.env.*`) using `example.env`
+
+### Support YT cookies
+
+Specify a cookie file `src/cookies.json` (or a custom file name in `.env`) using [this guide](https://github.com/skick1234/DisTube/wiki/YouTube-Cookies).
 
 ### Development
 
