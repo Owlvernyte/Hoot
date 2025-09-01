@@ -1,6 +1,6 @@
 {
     "name": "hoot",
-    "version": "0.4.0",
+    "version": "0.4.1",
     "main": "dist/index.js",
     "author": "@Owlvernyte",
     "license": "Apache-2.0",
