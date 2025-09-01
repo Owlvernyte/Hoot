@@ -1,0 +1,30 @@
+[
+    {
+        "domain": ".youtube.com",
+        "expirationDate": 9999999999.99999,
+        "hostOnly": false,
+        "httpOnly": false,
+        "name": "__Secure-1PAPISID",
+        "path": "/",
+        "sameSite": "unspecified",
+        "secure": true,
+        "session": false,
+        "storeId": "0",
+        "value": "some_value",
+        "id": 1
+    },
+    {
+        "domain": ".youtube.com",
+        "expirationDate": 9999999999.99999,
+        "hostOnly": false,
+        "httpOnly": true,
+        "name": "__Secure-1PSID",
+        "path": "/",
+        "sameSite": "unspecified",
+        "secure": true,
+        "session": false,
+        "storeId": "0",
+        "value": "some_value",
+        "id": 2
+    }
+]
