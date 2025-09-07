@@ -33,6 +33,7 @@ export class HootClient extends SapphireClient {
 	}
 
 	getYoutubePlugin() {
+		this.logger.info(`Getting YouTube plugin with cookie file: ${process.env.COOKIE_FILE}`);
 		return process.env.COOKIE_FILE
 			? new YouTubePlugin({ cookies: JSON.parse(fs.readFileSync(process.env.COOKIE_FILE, 'utf8')) })
 			: new YouTubePlugin();
